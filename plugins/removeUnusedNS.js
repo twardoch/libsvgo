@@ -1,8 +1,12 @@
+const name = 'removeUnusedNS'
+
 const type = 'full'
 
 const active = true
 
 const description = 'removes unused namespaces declaration'
+
+const params = {}
 
 /**
  * Remove unused namespaces declaration.
@@ -94,9 +98,4 @@ const fn = function (data) {
   return data
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

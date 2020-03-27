@@ -1,11 +1,15 @@
 import { pathElems as __pathElems, referencesProps } from './_collections'
 const pathElems = __pathElems.concat([ 'g', 'text' ])
 
+const name = 'moveGroupAttrsToElems'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'moves some group attributes to the content elements'
+
+const params = {}
 
 /**
  * Move group attrs to the content elements.
@@ -57,9 +61,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

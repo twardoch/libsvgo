@@ -1,8 +1,12 @@
+const name = 'cleanupEnableBackground'
+
 const type = 'full'
 
 const active = true
 
 const description = 'remove or cleanup enable-background attribute when possible'
+
+const params = {}
 
 /**
  * Remove or cleanup enable-background attr which coincides with a width/height box.
@@ -78,9 +82,4 @@ const fn = function (data) {
   })
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

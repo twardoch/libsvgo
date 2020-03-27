@@ -1,6 +1,8 @@
 import { editorNamespaces as __editorNamespaces } from './_collections'
 let editorNamespaces = __editorNamespaces
 
+const name = 'removeEditorsNSData'
+
 const type = 'perItem'
 
 const active = true
@@ -58,10 +60,4 @@ const fn = function (item, params) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

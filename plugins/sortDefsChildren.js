@@ -1,8 +1,12 @@
+const name = 'sortDefsChildren'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'Sorts children of <defs> to improve compression'
+
+const params = {}
 
 /**
  * Sorts children of defs in order to improve compression.
@@ -41,9 +45,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

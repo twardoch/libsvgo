@@ -1,8 +1,12 @@
+const name = 'removeViewBox'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes viewBox attribute when possible'
+
+const params = {}
 
 const viewBoxElems = [ 'svg', 'pattern', 'symbol' ]
 
@@ -41,9 +45,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

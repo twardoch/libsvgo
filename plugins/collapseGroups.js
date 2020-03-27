@@ -1,11 +1,15 @@
 import { inheritableAttrs as attrsInheritable, elemsGroups } from './_collections'
 const animationElems = elemsGroups.animation
 
+const name = 'collapseGroups'
+
 const type = 'perItemReverse'
 
 const active = true
 
 const description = 'collapses useless groups'
+
+const params = {}
 
 function hasAnimatedAttr (item) {
   return (
@@ -84,9 +88,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

@@ -1,5 +1,7 @@
 const DEFAULT_SEPARATOR = ':'
 
+const name = 'removeAttrs'
+
 const type = 'perItem'
 
 const active = false
@@ -136,10 +138,4 @@ const fn = function (item, params) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

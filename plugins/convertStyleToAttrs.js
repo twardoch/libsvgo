@@ -1,6 +1,8 @@
 import { attrsGroups } from './_collections'
 const stylingProps = attrsGroups.presentation
 
+const name = 'convertStyleToAttrs'
+
 const type = 'perItem'
 
 const active = true
@@ -116,10 +118,4 @@ function g () {
   return '(?:' + Array.prototype.join.call(arguments, '|') + ')'
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

@@ -3,6 +3,8 @@ import csstree from 'css-tree'
 // import unquote from 'unquote'
 import { referencesProps } from './_collections.js'
 
+const name = 'prefixIds'
+
 const type = 'perItem'
 
 const active = false
@@ -273,10 +275,4 @@ const fn = function (node, opts, extra) {
   return node
 }
 
-export {
-  type,
-  active,
-  params,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

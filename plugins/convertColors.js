@@ -1,5 +1,7 @@
 import { colorsProps, colorsNames, colorsShortNames } from './_collections'
 
+const name = 'convertColors'
+
 const type = 'perItem'
 
 const active = true
@@ -119,10 +121,4 @@ function rgb2hex (rgb) {
   return '#' + ('00000' + (rgb[ 0 ] << 16 | rgb[ 1 ] << 8 | rgb[ 2 ]).toString(16)).slice(-6).toUpperCase()
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

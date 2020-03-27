@@ -1,10 +1,14 @@
 import { inheritableAttrs, pathElems } from './_collections'
 
+const name = 'moveElemsAttrsToGroup'
+
 const type = 'perItemReverse'
 
 const active = true
 
 const description = 'moves elements attributes to the existing group wrapper'
+
+const params = {}
 
 /**
  * Collapse content's intersected and inheritable
@@ -109,9 +113,4 @@ function intersectInheritableAttrs (a, b) {
   return c
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

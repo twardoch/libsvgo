@@ -1,6 +1,8 @@
 import { cleanupOutData } from '../lib/svgo/tools'
 import { transform2js, transformsMultiply, matrixToTransform } from './_transforms'
 
+const name = 'convertTransform'
+
 const type = 'perItem'
 
 const active = true
@@ -348,10 +350,4 @@ function smartRound (precision, data) {
   return data
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

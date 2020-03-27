@@ -1,6 +1,8 @@
 import { referencesProps as __referencesProps } from './_collections'
 const referencesProps = new Set(__referencesProps)
 
+const name = 'cleanupIDs'
+
 const type = 'full'
 
 const active = true
@@ -212,10 +214,4 @@ function getIDstring (arr, params) {
   return str + arr.map(i => generateIDchars[ i ]).join('')
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

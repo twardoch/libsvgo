@@ -1,8 +1,12 @@
+const name = 'convertEllipseToCircle'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'converts non-eccentric <ellipse>s to <circle>s'
+
+const params = {}
 
 /**
  * Converts non-eccentric <ellipse>s to <circle>s.
@@ -35,9 +39,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

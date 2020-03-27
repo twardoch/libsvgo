@@ -1,8 +1,12 @@
+const name = 'removeMetadata'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes <metadata>'
+
+const params = {}
 
 /**
  * Remove <metadata>.
@@ -18,9 +22,4 @@ const fn = function (item) {
   return !item.isElem('metadata')
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

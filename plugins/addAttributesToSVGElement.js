@@ -1,8 +1,12 @@
+const name = 'addAttributesToSVGElement'
+
 const type = 'full'
 
 const active = false
 
 const description = 'adds attributes to an outer <svg> element'
+
+const params = {}
 
 const ENOCLS = `Error in plugin "addAttributesToSVGElement": absent parameters.
 It should have a list of "attributes" or one "attribute".
@@ -78,9 +82,4 @@ const fn = function (data, params) {
   return data
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

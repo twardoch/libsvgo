@@ -1,3 +1,5 @@
+const name = 'removeDesc'
+
 const type = 'perItem'
 
 const active = true
@@ -28,10 +30,4 @@ const fn = function (item, params) {
   )
 }
 
-export {
-  type,
-  active,
-  params,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

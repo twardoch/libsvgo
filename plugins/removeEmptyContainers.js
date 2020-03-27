@@ -1,11 +1,15 @@
 import { elemsGroups } from './_collections'
 const container = elemsGroups.container
 
+const name = 'removeEmptyContainers'
+
 const type = 'perItemReverse'
 
 const active = true
 
 const description = 'removes empty container elements'
+
+const params = {}
 
 /**
  * Remove empty containers.
@@ -28,9 +32,4 @@ const fn = function (item) {
     (!item.isElem('pattern') || !item.hasAttrLocal('href')))
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

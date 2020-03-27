@@ -1,11 +1,15 @@
 import { elemsGroups } from './_collections'
 const nonRendering = elemsGroups.nonRendering
 
+const name = 'removeUselessDefs'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes elements in <defs> without id'
+
+const params = {}
 
 /**
  * Removes content of defs and properties that aren't rendered directly without ids.
@@ -40,9 +44,4 @@ function getUsefulItems (item, usefulItems) {
   return usefulItems
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

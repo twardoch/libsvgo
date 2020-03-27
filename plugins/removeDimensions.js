@@ -1,8 +1,12 @@
+const name = 'removeDimensions'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes width and height in presence of viewBox (opposite to removeViewBox, disable it first)'
+
+const params = {}
 
 /**
  * Remove width/height attributes and add the viewBox attribute if it's missing
@@ -44,9 +48,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

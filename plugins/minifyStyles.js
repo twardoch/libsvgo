@@ -1,5 +1,7 @@
 import { minify, minifyBlock } from 'csso'
 
+const name = 'minifyStyles'
+
 const type = 'full'
 
 const active = true
@@ -156,10 +158,4 @@ function collectUsageData (ast, options) {
   return safe && hasData ? usageData : null
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

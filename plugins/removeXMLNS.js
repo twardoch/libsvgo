@@ -1,8 +1,12 @@
+const name = 'removeXMLNS'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes xmlns attribute (for inline svg, disabled by default)'
+
+const params = {}
 
 /**
  * Remove the xmlns attribute when present.
@@ -23,9 +27,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

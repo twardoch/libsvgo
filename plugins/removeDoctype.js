@@ -1,8 +1,12 @@
+const name = 'removeDoctype'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes doctype declaration'
+
+const params = {}
 
 /**
  * Remove DOCTYPE declaration.
@@ -35,9 +39,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

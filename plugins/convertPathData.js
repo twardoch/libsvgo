@@ -2,6 +2,8 @@ import { cleanupOutData } from '../lib/svgo/tools'
 import { pathElems } from './_collections'
 import { path2js, js2path, applyTransforms } from './_path'
 
+const name = 'convertPathData'
+
 const type = 'perItem'
 
 const active = true
@@ -903,10 +905,4 @@ function data2Path (params, pathData) {
   }, '')
 }
 
-export {
-  type,
-  active,
-  description,
-  params,
-  fn
-}
+export { name, type, active, description, params, fn }

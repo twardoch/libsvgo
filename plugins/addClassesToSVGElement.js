@@ -1,8 +1,12 @@
+const name = 'addClassesToSVGElement'
+
 const type = 'full'
 
 const active = false
 
 const description = 'adds classnames to an outer <svg> element'
+
+const params = {}
 
 const ENOCLS = `Error in plugin "addClassesToSVGElement": absent parameters.
 It should have a list of classes in "classNames" or one "className".
@@ -48,9 +52,4 @@ const fn = function (data, params) {
   return data
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

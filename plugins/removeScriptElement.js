@@ -1,8 +1,12 @@
+const name = 'removeScriptElement'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes <script> elements (disabled by default)'
+
+const params = {}
 
 /**
  * Remove <script>.
@@ -18,9 +22,4 @@ const fn = function (item) {
   return !item.isElem('script')
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

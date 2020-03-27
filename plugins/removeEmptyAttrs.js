@@ -1,8 +1,12 @@
+const name = 'removeEmptyAttrs'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes empty attributes'
+
+const params = {}
 
 /**
  * Remove attributes with empty values.
@@ -22,9 +26,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

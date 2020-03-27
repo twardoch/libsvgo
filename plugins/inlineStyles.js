@@ -10,6 +10,8 @@ import {
   setCssStr
 } from '../lib/css-tools'
 
+const name = 'inlineStyles'
+
 const type = 'full'
 
 const active = true
@@ -241,10 +243,4 @@ const fn = function (document, opts) {
   return document
 }
 
-export {
-  type,
-  active,
-  params,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

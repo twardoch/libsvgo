@@ -1,8 +1,12 @@
+const name = 'removeRasterImages'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes raster images (disabled by default)'
+
+const params = {}
 
 /**
  * Remove raster images references in <image>.
@@ -23,9 +27,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

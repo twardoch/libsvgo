@@ -1,8 +1,12 @@
+const name = 'removeXMLProcInst'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes XML processing instructions'
+
+const params = {}
 
 /**
  * Remove XML Processing Instruction.
@@ -19,9 +23,4 @@ const fn = function (item) {
   return !(item.processinginstruction && item.processinginstruction.name === 'xml')
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

@@ -1,11 +1,15 @@
 import JSAPI from '../lib/svgo/jsAPI'
 import { intersects, path2js } from './_path'
 
+const name = 'removeOffCanvasPaths'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes elements that are drawn outside of the viewbox (disabled by default)'
+
+const params = {}
 
 let viewBox
 let viewBoxJS
@@ -116,9 +120,4 @@ function pathMovesWithinViewBox (path) {
   return false
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

@@ -1,8 +1,12 @@
+const name = 'removeTitle'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes <title>'
+
+const params = {}
 
 /**
  * Remove <title>.
@@ -18,9 +22,4 @@ const fn = function (item) {
   return !item.isElem('title')
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

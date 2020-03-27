@@ -1,10 +1,14 @@
 import { inheritableAttrs, attrsGroups, presentationNonInheritableGroupAttrs as applyGroups } from './_collections'
 
+const name = 'removeNonInheritableGroupAttrs'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes non-inheritable group’s presentational attributes'
+
+const params = {}
 
 /**
  * Remove non-inheritable group's "presentation" attributes.
@@ -28,9 +32,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

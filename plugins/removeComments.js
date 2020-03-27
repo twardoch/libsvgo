@@ -1,8 +1,12 @@
+const name = 'removeComments'
+
 const type = 'perItem'
 
 const active = true
 
 const description = 'removes comments'
+
+const params = {}
 
 /**
  * Remove comments.
@@ -22,9 +26,4 @@ const fn = function (item) {
   }
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }

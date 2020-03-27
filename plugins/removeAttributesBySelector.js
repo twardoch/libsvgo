@@ -1,8 +1,12 @@
+const name = 'removeAttributesBySelector'
+
 const type = 'perItem'
 
 const active = false
 
 const description = 'removes attributes of elements that match a css selector'
+
+const params = {}
 
 /**
  * Removes attributes of elements that match a css selector.
@@ -64,9 +68,4 @@ const fn = function (item, params) {
   })
 }
 
-export {
-  type,
-  active,
-  description,
-  fn
-}
+export { name, type, active, description, params, fn }
