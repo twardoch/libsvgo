@@ -1,4 +1,4 @@
-import { basename } from 'path'
+// import { basename } from 'path'
 import csstree from 'css-tree'
 import unquote from 'unquote'
 import { referencesProps } from './_collections.js'
@@ -164,7 +164,7 @@ const fn = function (node, opts, extra) {
   } else if (opts.prefix === false) {
     prefix = false
   } else if (extra && extra.path && extra.path.length > 0) {
-    prefix = basename(extra.path)
+    prefix = extra.path.split(/[/\\]/).pop() // prefix = basename(extra.path)
   }
 
   // prefixes a normal value
