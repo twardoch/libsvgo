@@ -16,7 +16,7 @@ const description = 'Sorts children of <defs> to improve compression'
 const fn = function (item) {
   if (item.isElem('defs')) {
     if (item.content) {
-      var frequency = item.content.reduce(function (frequency, child) {
+      const frequency = item.content.reduce(function (frequency, child) {
         if (child.elem in frequency) {
           frequency[ child.elem ]++
         } else {
@@ -25,11 +25,11 @@ const fn = function (item) {
         return frequency
       }, {})
       item.content.sort(function (a, b) {
-        var frequencyComparison = frequency[ b.elem ] - frequency[ a.elem ]
+        const frequencyComparison = frequency[ b.elem ] - frequency[ a.elem ]
         if (frequencyComparison !== 0) {
           return frequencyComparison
         }
-        var lengthComparison = b.elem.length - a.elem.length
+        const lengthComparison = b.elem.length - a.elem.length
         if (lengthComparison !== 0) {
           return lengthComparison
         }

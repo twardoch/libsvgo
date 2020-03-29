@@ -9,16 +9,15 @@ const { describe, it } = global
 
 describe('indentation', function () {
   it('should create indent with 2 spaces', function () {
-    var filepath = resolve(__dirname, './test.svg')
-    var svgo
+    const filepath = resolve(__dirname, './test.svg')
 
     const data = readFileSync(filepath, 'utf8')
 
-    var splitted = normalize(data).split(/\s*@@@\s*/)
-    var orig = splitted[ 0 ]
-    var should = splitted[ 1 ]
+    const splitted = normalize(data).split(/\s*@@@\s*/)
+    const orig = splitted[ 0 ]
+    const should = splitted[ 1 ]
 
-    svgo = new SVGO({
+    const svgo = new SVGO({
       full: true,
       plugins: [],
       js2svg: { pretty: true, indent: 2 }

@@ -49,8 +49,6 @@ const params = {
  * @author Eli Dupuis (@elidupuis)
  */
 const fn = function (item, params) {
-  var elemId, elemClass;
-
   // wrap params in an array if not already
   [ 'id', 'class' ].forEach(function (key) {
     if (!Array.isArray(params[ key ])) {
@@ -64,15 +62,15 @@ const fn = function (item, params) {
   }
 
   // remove element if it's `id` matches configured `id` params
-  elemId = item.attr('id')
+  const elemId = item.attr('id')
   if (elemId) {
     return params.id.indexOf(elemId.value) === -1
   }
 
   // remove element if it's `class` contains any of the configured `class` params
-  elemClass = item.attr('class')
+  const elemClass = item.attr('class')
   if (elemClass) {
-    var hasClassRegex = new RegExp(params.class.join('|'))
+    const hasClassRegex = new RegExp(params.class.join('|'))
     return !hasClassRegex.test(elemClass.value)
   }
 }

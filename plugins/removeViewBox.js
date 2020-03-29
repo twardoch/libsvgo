@@ -4,7 +4,7 @@ const active = true
 
 const description = 'removes viewBox attribute when possible'
 
-var viewBoxElems = [ 'svg', 'pattern', 'symbol' ]
+const viewBoxElems = [ 'svg', 'pattern', 'symbol' ]
 
 /**
  * Remove viewBox attr which coincides with a width/height box.
@@ -28,7 +28,7 @@ const fn = function (item) {
     item.hasAttr('width') &&
     item.hasAttr('height')
   ) {
-    var nums = item.attr('viewBox').value.split(/[ ,]+/g)
+    const nums = item.attr('viewBox').value.split(/[ ,]+/g)
 
     if (
       nums[ 0 ] === '0' &&

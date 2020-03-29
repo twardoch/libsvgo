@@ -33,8 +33,8 @@ const fn = function (item, params) {
   }
 
   if (!params.hasStyleOrScript && item.isElem(shape) && !item.computedAttr('id')) {
-    var stroke = params.stroke && item.computedAttr('stroke')
-    var fill = params.fill && !item.computedAttr('fill', 'none')
+    const stroke = params.stroke && item.computedAttr('stroke')
+    const fill = params.fill && !item.computedAttr('fill', 'none')
 
     // remove stroke*
     if (
@@ -45,8 +45,8 @@ const fn = function (item, params) {
         item.computedAttr('stroke-width', '0')
       )
     ) {
-      var parentStroke = item.parentNode.computedAttr('stroke')
-      var declineStroke = parentStroke && parentStroke !== 'none'
+      const parentStroke = item.parentNode.computedAttr('stroke')
+      const declineStroke = parentStroke && parentStroke !== 'none'
 
       item.eachAttr(function (attr) {
         if (regStrokeProps.test(attr.name)) {

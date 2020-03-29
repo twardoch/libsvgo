@@ -67,7 +67,7 @@ const fn = function (item, params) {
  * @param {Object} params plugin params
  */
 function convertTransform (item, attrName, params) {
-  var data = transform2js(item.attr(attrName).value)
+  let data = transform2js(item.attr(attrName).value)
   params = definePrecision(data, params)
 
   if (params.collapseIntoOne && data.length > 1) {
@@ -103,9 +103,8 @@ function convertTransform (item, attrName, params) {
  * @return {Array} output array
  */
 function definePrecision (data, params) {
-  /* jshint validthis: true */
-  var matrixData = data.reduce(getMatrixData, [])
-  var significantDigits = params.transformPrecision
+  const matrixData = data.reduce(getMatrixData, [])
+  let significantDigits = params.transformPrecision
 
   // Clone params so it don't affect other elements transformations.
   params = Object.assign({}, params)
@@ -163,15 +162,15 @@ function floatDigits (n) {
  * @return {Array} output array
  */
 function convertToShorts (transforms, params) {
-  for (var i = 0; i < transforms.length; i++) {
-    var transform = transforms[ i ]
+  for (let i = 0; i < transforms.length; i++) {
+    let transform = transforms[ i ]
 
     // convert matrix to the short aliases
     if (
       params.matrixToTransform &&
       transform.name === 'matrix'
     ) {
-      var decomposed = matrixToTransform(transform, params)
+      const decomposed = matrixToTransform(transform, params)
       if (decomposed !== transform &&
         js2transform(decomposed, params).length <= js2transform([ transform ], params).length) {
         transforms.splice.apply(transforms, [ i, 1 ].concat(decomposed))
@@ -285,7 +284,7 @@ function removeUseless (transforms) {
  * @return {String} output string
  */
 function js2transform (transformJS, params) {
-  var transformString = ''
+  let transformString = ''
 
   // collect output value string
   transformJS.forEach(function (transform) {
@@ -338,9 +337,9 @@ function round (data) {
  * @return {Array} output data array
  */
 function smartRound (precision, data) {
-  for (var i = data.length, tolerance = +Math.pow(0.1, precision).toFixed(precision); i--;) {
+  for (let i = data.length, tolerance = +Math.pow(0.1, precision).toFixed(precision); i--;) {
     if (data[ i ].toFixed(precision) !== data[ i ]) {
-      var rounded = +data[ i ].toFixed(precision - 1)
+      const rounded = +data[ i ].toFixed(precision - 1)
       data[ i ] = +Math.abs(rounded - data[ i ]).toFixed(precision + 1) >= tolerance
         ? +data[ i ].toFixed(precision)
         : rounded

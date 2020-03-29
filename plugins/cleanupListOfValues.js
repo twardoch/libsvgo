@@ -77,14 +77,13 @@ const fn = function (item, params) {
   }
 
   function roundValues ($prop) {
-    var num
-    var units
-    var match
-    var matchNew
-    var lists = $prop.value
-    var listsArr = lists.split(regSeparator)
-    var roundedListArr = []
-    var roundedList
+    let num
+    let units
+    let match
+    let matchNew
+    const lists = $prop.value
+    const listsArr = lists.split(regSeparator)
+    const roundedListArr = []
 
     listsArr.forEach(function (elem) {
       match = elem.match(regNumericValues)
@@ -98,7 +97,7 @@ const fn = function (item, params) {
 
         // convert absolute values to pixels
         if (params.convertToPx && units && (units in absoluteLengths)) {
-          var pxNum = +(absoluteLengths[ units ] * match[ 1 ]).toFixed(params.floatPrecision)
+          const pxNum = +(absoluteLengths[ units ] * match[ 1 ]).toFixed(params.floatPrecision)
 
           if (String(pxNum).length < match[ 0 ].length) {
             num = pxNum
@@ -124,7 +123,7 @@ const fn = function (item, params) {
       }
     })
 
-    roundedList = roundedListArr.join(' ')
+    const roundedList = roundedListArr.join(' ')
     $prop.value = roundedList
   }
 }

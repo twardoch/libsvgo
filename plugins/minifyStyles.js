@@ -26,9 +26,9 @@ const params = {
 const fn = function (ast, options) {
   options = options || {}
 
-  var minifyOptionsForStylesheet = cloneObject(options)
-  var minifyOptionsForAttribute = cloneObject(options)
-  var elems = findStyleElems(ast)
+  const minifyOptionsForStylesheet = cloneObject(options)
+  const minifyOptionsForAttribute = cloneObject(options)
+  const elems = findStyleElems(ast)
 
   minifyOptionsForStylesheet.usage = collectUsageData(ast, options)
   minifyOptionsForAttribute.usage = null
@@ -36,13 +36,13 @@ const fn = function (ast, options) {
   elems.forEach(function (elem) {
     if (elem.isElem('style')) {
       // <style> element
-      var styleCss = elem.content[ 0 ].text || elem.content[ 0 ].cdata || []
-      var DATA = styleCss.indexOf('>') >= 0 || styleCss.indexOf('<') >= 0 ? 'cdata' : 'text'
+      const styleCss = elem.content[ 0 ].text || elem.content[ 0 ].cdata || []
+      const DATA = styleCss.indexOf('>') >= 0 || styleCss.indexOf('<') >= 0 ? 'cdata' : 'text'
 
       elem.content[ 0 ][ DATA ] = minify(styleCss, minifyOptionsForStylesheet).css
     } else {
       // style attribute
-      var elemStyle = elem.attr('style').value
+      const elemStyle = elem.attr('style').value
 
       elem.attr('style').value = minifyBlock(elemStyle, minifyOptionsForAttribute).css
     }
@@ -52,9 +52,9 @@ const fn = function (ast, options) {
 }
 
 function cloneObject (obj) {
-  var result = {}
+  const result = {}
 
-  for (var key in obj) {
+  for (const key in obj) {
     result[ key ] = obj[ key ]
   }
 
@@ -63,8 +63,8 @@ function cloneObject (obj) {
 
 function findStyleElems (ast) {
   function walk (items, styles) {
-    for (var i = 0; i < items.content.length; i++) {
-      var item = items.content[ i ]
+    for (let i = 0; i < items.content.length; i++) {
+      const item = items.content[ i ]
 
       // go deeper
       if (item.content) {
@@ -97,9 +97,11 @@ function shouldFilter (options, name) {
 }
 
 function collectUsageData (ast, options) {
+  let safe = true
+
   function walk (items, usageData) {
-    for (var i = 0; i < items.content.length; i++) {
-      var item = items.content[ i ]
+    for (let i = 0; i < items.content.length; i++) {
+      const item = items.content[ i ]
 
       // go deeper
       if (item.content) {
@@ -132,10 +134,9 @@ function collectUsageData (ast, options) {
     return usageData
   }
 
-  var safe = true
-  var usageData = {}
-  var hasData = false
-  var rawData = walk(ast, {
+  const usageData = {}
+  let hasData = false
+  const rawData = walk(ast, {
     ids: Object.create(null),
     classes: Object.create(null),
     tags: Object.create(null)
@@ -145,7 +146,7 @@ function collectUsageData (ast, options) {
     safe = true
   }
 
-  for (var key in rawData) {
+  for (const key in rawData) {
     if (shouldFilter(options, key)) {
       usageData[ key ] = Object.keys(rawData[ key ])
       hasData = true

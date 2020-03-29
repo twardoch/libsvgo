@@ -36,15 +36,15 @@ const maxIDindex = generateIDchars.length - 1
  * @author Kir Belevich
  */
 const fn = function (data, params) {
-  var currentID
-  var currentIDstring
-  var IDs = new Map()
-  var referencesIDs = new Map()
-  var hasStyleOrScript = false
-  var preserveIDs = new Set(Array.isArray(params.preserve) ? params.preserve : params.preserve ? [ params.preserve ] : [])
-  var preserveIDPrefixes = new Set(Array.isArray(params.preservePrefixes) ? params.preservePrefixes : (params.preservePrefixes ? [ params.preservePrefixes ] : []))
-  var idValuePrefix = '#'
-  var idValuePostfix = '.'
+  let currentID
+  let currentIDstring
+  const IDs = new Map()
+  const referencesIDs = new Map()
+  let hasStyleOrScript = false
+  const preserveIDs = new Set(Array.isArray(params.preserve) ? params.preserve : params.preserve ? [ params.preserve ] : [])
+  const preserveIDPrefixes = new Set(Array.isArray(params.preservePrefixes) ? params.preservePrefixes : (params.preservePrefixes ? [ params.preservePrefixes ] : []))
+  const idValuePrefix = '#'
+  const idValuePostfix = '.'
 
   /**
    * Bananas!
@@ -53,12 +53,12 @@ const fn = function (data, params) {
    * @return {Array} output items
    */
   function monkeys (items) {
-    for (var i = 0; i < items.content.length && !hasStyleOrScript; i++) {
-      var item = items.content[ i ]
+    for (let i = 0; i < items.content.length && !hasStyleOrScript; i++) {
+      const item = items.content[ i ]
 
       // quit if <style> or <script> present ('force' param prevents quitting)
       if (!params.force) {
-        var isNotEmpty = Boolean(item.content)
+        const isNotEmpty = Boolean(item.content)
         if (item.isElem(styleOrScript) && isNotEmpty) {
           hasStyleOrScript = true
           continue
@@ -66,9 +66,9 @@ const fn = function (data, params) {
 
         // Don't remove IDs if the whole SVG consists only of defs.
         if (item.isElem('svg')) {
-          var hasDefsOnly = true
+          let hasDefsOnly = true
 
-          for (var j = 0; j < item.content.length; j++) {
+          for (let j = 0; j < item.content.length; j++) {
             if (!item.content[ j ].isElem('defs')) {
               hasDefsOnly = false
               break
@@ -82,7 +82,8 @@ const fn = function (data, params) {
       // …and don't remove any ID if yes
       if (item.isElem()) {
         item.eachAttr(function (attr) {
-          var key, match
+          let key
+          let match
 
           // save IDs
           if (attr.name === 'id') {
@@ -104,7 +105,7 @@ const fn = function (data, params) {
             key = match[ 1 ] // href reference
           }
           if (key) {
-            var ref = referencesIDs.get(key) || []
+            const ref = referencesIDs.get(key) || []
             ref.push(attr)
             referencesIDs.set(key, ref)
           }
@@ -126,8 +127,8 @@ const fn = function (data, params) {
 
   const idPreserved = id => preserveIDs.has(id) || idMatchesPrefix(preserveIDPrefixes, id)
 
-  for (var ref of referencesIDs) {
-    var key = ref[ 0 ]
+  for (const ref of referencesIDs) {
+    const key = ref[ 0 ]
 
     if (IDs.has(key)) {
       // replace referenced IDs with the minified ones
@@ -138,7 +139,7 @@ const fn = function (data, params) {
 
         IDs.get(key).attr('id').value = currentIDstring
 
-        for (var attr of ref[ 1 ]) {
+        for (const attr of ref[ 1 ]) {
           attr.value = attr.value.includes(idValuePrefix)
             ? attr.value.replace(idValuePrefix + key, idValuePrefix + currentIDstring)
             : attr.value.replace(key + idValuePostfix, currentIDstring + idValuePostfix)
@@ -150,7 +151,7 @@ const fn = function (data, params) {
   }
   // remove non-referenced IDs attributes from elements
   if (params.remove) {
-    for (var keyElem of IDs) {
+    for (const keyElem of IDs) {
       if (!idPreserved(keyElem[ 0 ])) {
         keyElem[ 1 ].removeAttr('id')
       }
@@ -169,7 +170,7 @@ const fn = function (data, params) {
 function idMatchesPrefix (prefixArray, currentID) {
   if (!currentID) return false
 
-  for (var prefix of prefixArray) if (currentID.startsWith(prefix)) return true
+  for (const prefix of prefixArray) if (currentID.startsWith(prefix)) return true
   return false
 }
 
@@ -184,7 +185,7 @@ function generateID (currentID) {
 
   currentID[ currentID.length - 1 ]++
 
-  for (var i = currentID.length - 1; i > 0; i--) {
+  for (let i = currentID.length - 1; i > 0; i--) {
     if (currentID[ i ] > maxIDindex) {
       currentID[ i ] = 0
 
@@ -207,7 +208,7 @@ function generateID (currentID) {
  * @return {String} output ID string
  */
 function getIDstring (arr, params) {
-  var str = params.prefix
+  const str = params.prefix
   return str + arr.map(i => generateIDchars[ i ]).join('')
 }
 

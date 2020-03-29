@@ -19,13 +19,13 @@ const rxId = /^#(.*)$/ // regular expression for matching an ID + extracing its 
 let addPrefix = null
 
 // Escapes a string for being used as ID
-var escapeIdentifierName = function (str) {
+const escapeIdentifierName = function (str) {
   return str.replace(/[. ]/g, '_')
 }
 
 // Matches an #ID value, captures the ID name
-var matchId = function (urlVal) {
-  var idUrlMatches = urlVal.match(rxId)
+const matchId = function (urlVal) {
+  const idUrlMatches = urlVal.match(rxId)
   if (idUrlMatches === null) {
     return false
   }
@@ -33,8 +33,8 @@ var matchId = function (urlVal) {
 }
 
 // Matches an url(...) value, captures the URL
-var matchUrl = function (val) {
-  var urlMatches = /url\((.*?)\)/gi.exec(val)
+const matchUrl = function (val) {
+  const urlMatches = /url\((.*?)\)/gi.exec(val)
   if (urlMatches === null) {
     return false
   }
@@ -42,13 +42,13 @@ var matchUrl = function (val) {
 }
 
 // Checks if attribute is empty
-var attrNotEmpty = function (attr) {
+const attrNotEmpty = function (attr) {
   return (attr && attr.value && attr.value.length > 0)
 }
 
 // prefixes an #ID
-var prefixId = function (val) {
-  var idName = matchId(val)
+const prefixId = function (val) {
+  const idName = matchId(val)
   if (!idName) {
     return false
   }
@@ -58,7 +58,7 @@ var prefixId = function (val) {
 // attr.value helper methods
 
 // prefixes a class attribute value
-var addPrefixToClassAttr = function (attr) {
+const addPrefixToClassAttr = function (attr) {
   if (!attrNotEmpty(attr)) {
     return
   }
@@ -67,7 +67,7 @@ var addPrefixToClassAttr = function (attr) {
 }
 
 // prefixes an ID attribute value
-var addPrefixToIdAttr = function (attr) {
+const addPrefixToIdAttr = function (attr) {
   if (!attrNotEmpty(attr)) {
     return
   }
@@ -76,12 +76,12 @@ var addPrefixToIdAttr = function (attr) {
 }
 
 // prefixes a href attribute value
-var addPrefixToHrefAttr = function (attr) {
+const addPrefixToHrefAttr = function (attr) {
   if (!attrNotEmpty(attr)) {
     return
   }
 
-  var idPrefixed = prefixId(attr.value)
+  const idPrefixed = prefixId(attr.value)
   if (!idPrefixed) {
     return
   }
@@ -89,18 +89,18 @@ var addPrefixToHrefAttr = function (attr) {
 }
 
 // prefixes an URL attribute value
-var addPrefixToUrlAttr = function (attr) {
+const addPrefixToUrlAttr = function (attr) {
   if (!attrNotEmpty(attr)) {
     return
   }
 
   // url(...) in value
-  var urlVal = matchUrl(attr.value)
+  const urlVal = matchUrl(attr.value)
   if (!urlVal) {
     return
   }
 
-  var idPrefixed = prefixId(urlVal)
+  const idPrefixed = prefixId(urlVal)
   if (!idPrefixed) {
     return
   }
@@ -109,20 +109,20 @@ var addPrefixToUrlAttr = function (attr) {
 }
 
 // prefixes begin/end attribute value
-var addPrefixToBeginEndAttr = function (attr) {
+const addPrefixToBeginEndAttr = function (attr) {
   if (!attrNotEmpty(attr)) {
     return
   }
 
-  var parts = attr.value.split('; ').map(function (val) {
+  const parts = attr.value.split('; ').map(function (val) {
     val = val.trim()
 
     if (val.endsWith('.end') || val.endsWith('.start')) {
-      var idPostfix = val.split('.')
-      var id = idPostfix[ 0 ]
-      var postfix = idPostfix[ 1 ]
+      const idPostfix = val.split('.')
+      const id = idPostfix[ 0 ]
+      const postfix = idPostfix[ 1 ]
 
-      var idPrefixed = prefixId(`#${id}`)
+      let idPrefixed = prefixId(`#${id}`)
 
       if (!idPrefixed) {
         return val
@@ -154,7 +154,7 @@ const fn = function (node, opts, extra) {
   }
 
   // prefix, from file name or option
-  var prefix = 'prefix'
+  let prefix = 'prefix'
   if (opts.prefix) {
     if (typeof opts.prefix === 'function') {
       prefix = opts.prefix(node, extra)
@@ -183,9 +183,9 @@ const fn = function (node, opts, extra) {
       return node
     }
 
-    var cssStr = node.content[ 0 ].text || node.content[ 0 ].cdata || []
+    const cssStr = node.content[ 0 ].text || node.content[ 0 ].cdata || []
 
-    var cssAst = {}
+    let cssAst = {}
     try {
       cssAst = csstree.parse(cssStr, {
         parseValue: true,
@@ -196,7 +196,7 @@ const fn = function (node, opts, extra) {
       return node
     }
 
-    var idPrefixed = ''
+    let idPrefixed = ''
     csstree.walk(cssAst, function (node) {
       // #ID, .class
       if (((opts.prefixIds && node.type === 'IdSelector') ||
@@ -249,7 +249,7 @@ const fn = function (node, opts, extra) {
   addPrefixToHrefAttr(node.attrs[ 'xlink:href' ])
 
   // (referenceable) properties
-  for (var referencesProp of referencesProps) {
+  for (const referencesProp of referencesProps) {
     addPrefixToUrlAttr(node.attrs[ referencesProp ])
   }
 

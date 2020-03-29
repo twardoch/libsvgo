@@ -20,9 +20,9 @@ const description = 'remove or cleanup enable-background attribute when possible
  * @author Kir Belevich
  */
 const fn = function (data) {
-  var regEnableBackground = /^new\s0\s0\s([-+]?\d*\.?\d+([eE][-+]?\d+)?)\s([-+]?\d*\.?\d+([eE][-+]?\d+)?)$/
-  var hasFilter = false
-  var elems = [ 'svg', 'mask', 'pattern' ]
+  const regEnableBackground = /^new\s0\s0\s([-+]?\d*\.?\d+([eE][-+]?\d+)?)\s([-+]?\d*\.?\d+([eE][-+]?\d+)?)$/
+  const elems = [ 'svg', 'mask', 'pattern' ]
+  let hasFilter = false
 
   function checkEnableBackground (item) {
     if (
@@ -31,7 +31,7 @@ const fn = function (data) {
       item.hasAttr('width') &&
       item.hasAttr('height')
     ) {
-      var match = item.attr('enable-background').value.match(regEnableBackground)
+      const match = item.attr('enable-background').value.match(regEnableBackground)
 
       if (match) {
         if (
@@ -65,7 +65,7 @@ const fn = function (data) {
     return items
   }
 
-  var firstStep = monkeys(data, function (item) {
+  const firstStep = monkeys(data, function (item) {
     checkEnableBackground(item)
     if (!hasFilter) {
       checkForFilter(item)

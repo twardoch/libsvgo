@@ -55,13 +55,11 @@ const regStripComments = new RegExp(g(rEscape, rSingleQuotes, rQuotes, '/\\*[^]*
  * @author Kir Belevich
  */
 const fn = function (item, params) {
-  /* jshint boss: true */
-
   if (item.elem && item.hasAttr('style')) {
     // ['opacity: 1', 'color: #000']
-    var styleValue = item.attr('style').value
-    var styles = []
-    var attrs = {}
+    let styleValue = item.attr('style').value
+    let styles = []
+    const attrs = {}
 
     // Strip CSS comments preserving escape sequences and strings.
     styleValue = styleValue.replace(regStripComments, function (match) {
@@ -70,7 +68,7 @@ const fn = function (item, params) {
     })
 
     regDeclarationBlock.lastIndex = 0
-    for (var rule; (rule = regDeclarationBlock.exec(styleValue));) {
+    for (let rule; (rule = regDeclarationBlock.exec(styleValue));) {
       if (!params.keepImportant || !rule[ 3 ]) {
         styles.push([ rule[ 1 ], rule[ 2 ] ])
       }
@@ -79,8 +77,8 @@ const fn = function (item, params) {
     if (styles.length) {
       styles = styles.filter(function (style) {
         if (style[ 0 ]) {
-          var prop = style[ 0 ].toLowerCase()
-          var val = style[ 1 ]
+          const prop = style[ 0 ].toLowerCase()
+          let val = style[ 1 ]
 
           if (rQuotedString.test(val)) {
             val = val.slice(1, -1)

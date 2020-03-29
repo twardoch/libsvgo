@@ -10,8 +10,8 @@ const { describe, it, before } = global
 
 describe('svg2js', function () {
   describe('working svg', function () {
-    var filepath = resolve(__dirname, './test.svg')
-    var root
+    const filepath = resolve(__dirname, './test.svg')
+    let root
 
     before('', async () => {
       const data = readFileSync(filepath, 'utf8')
@@ -293,7 +293,7 @@ describe('svg2js', function () {
       })
 
       describe('addAttr()', function () {
-        var attr = {
+        const attr = {
           name: 'test',
           value: 3,
           prefix: '',
@@ -354,9 +354,9 @@ describe('svg2js', function () {
   })
 
   describe('malformed svg', function () {
-    var filepath = resolve(__dirname, './test.bad.svg')
-    var root
-    var error
+    const filepath = resolve(__dirname, './test.bad.svg')
+    let root
+    let error
 
     before('', function () {
       try {
@@ -393,8 +393,8 @@ describe('svg2js', function () {
   })
 
   describe('entities', function () {
-    var filepath = resolve(__dirname, './test.entities.svg')
-    var root
+    const filepath = resolve(__dirname, './test.entities.svg')
+    let root
 
     before('', function () {
       const data = readFileSync(filepath, 'utf8')
@@ -409,7 +409,7 @@ describe('svg2js', function () {
       })
 
       it('should have correctly parsed entities', function () {
-        var attrs = root.content[ root.content.length - 1 ].attrs
+        const attrs = root.content[ root.content.length - 1 ].attrs
 
         attrs[ 'xmlns:x' ].value.should.be.equal('http://ns.adobe.com/Extensibility/1.0/')
         attrs[ 'xmlns:graph' ].value.should.be.equal('http://ns.adobe.com/Graphs/1.0/')

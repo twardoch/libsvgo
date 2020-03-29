@@ -5,13 +5,13 @@ const { describe, it } = global
 
 describe('svgo object', function () {
   it('should has createContentItem method', function () {
-    var svgo = new SVGO()
+    const svgo = new SVGO()
     svgo.createContentItem.should.be.a.Function()
   })
 
   it('should be able to create content item', function () {
-    var svgo = new SVGO()
-    var item = svgo.createContentItem({
+    const svgo = new SVGO()
+    const item = svgo.createContentItem({
       elem: 'elementName',
       prefix: 'prefixName',
       local: 'localName'
@@ -24,8 +24,8 @@ describe('svgo object', function () {
   })
 
   it('should be able create content item without argument', function () {
-    var svgo = new SVGO()
-    var item = svgo.createContentItem()
+    const svgo = new SVGO()
+    const item = svgo.createContentItem()
 
     item.should.be.instanceof(JSAPI)
     item.should.be.empty()

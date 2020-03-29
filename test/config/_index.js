@@ -4,7 +4,7 @@ const { describe, it } = global
 
 describe('config', function () {
   describe('default config', function () {
-    var config = CONFIG()
+    const config = CONFIG()
 
     it('should be an instance of Object', function () {
       config.should.be.an.instanceOf(Object)
@@ -20,7 +20,7 @@ describe('config', function () {
   })
 
   describe('extend config with object', function () {
-    var config = CONFIG({
+    const config = CONFIG({
       multipass: true,
       plugins: [
         { removeDoctype: false },
@@ -28,9 +28,9 @@ describe('config', function () {
         { removeRasterImages: { param: true } }
       ]
     })
-    var removeDoctype = getPlugin('removeDoctype', config.plugins)
-    var convertColors = getPlugin('convertColors', config.plugins)
-    var removeRasterImages = getPlugin('removeRasterImages', config.plugins)
+    const removeDoctype = getPlugin('removeDoctype', config.plugins)
+    const convertColors = getPlugin('convertColors', config.plugins)
+    const removeRasterImages = getPlugin('removeRasterImages', config.plugins)
 
     it('should have "multipass"', function () {
       config.multipass.should.be.true()
@@ -78,7 +78,7 @@ describe('config', function () {
   })
 
   describe('replace default config with custom', function () {
-    var config = CONFIG({
+    const config = CONFIG({
       full: true,
       multipass: true,
       floatPrecision: 2,
@@ -86,7 +86,7 @@ describe('config', function () {
         { cleanupNumericValues: true }
       ]
     })
-    var cleanupNumericValues = getPlugin('cleanupNumericValues', config.plugins)
+    const cleanupNumericValues = getPlugin('cleanupNumericValues', config.plugins)
 
     it('should have "multipass"', function () {
       config.multipass.should.be.true()
@@ -106,7 +106,7 @@ describe('config', function () {
   })
   describe('custom plugins', function () {
     describe('extend config with custom plugin', function () {
-      var config = CONFIG({
+      const config = CONFIG({
         plugins: [
           {
             aCustomPlugin: {
@@ -116,7 +116,7 @@ describe('config', function () {
           }
         ]
       })
-      var customPlugin = getPlugin('aCustomPlugin', config.plugins)
+      const customPlugin = getPlugin('aCustomPlugin', config.plugins)
 
       it('custom plugin should be enabled', function () {
         customPlugin.active.should.be.true()
@@ -128,7 +128,7 @@ describe('config', function () {
     })
 
     describe('replace default config with custom plugin', function () {
-      var config = CONFIG({
+      const config = CONFIG({
         full: true,
         plugins: [
           {
@@ -139,7 +139,7 @@ describe('config', function () {
           }
         ]
       })
-      var customPlugin = getPlugin('aCustomPlugin', config.plugins)
+      const customPlugin = getPlugin('aCustomPlugin', config.plugins)
 
       it('config.plugins should have length 1', function () {
         config.plugins.should.have.length(1)
@@ -157,7 +157,7 @@ describe('config', function () {
 })
 
 function getPlugin (name, plugins) {
-  var found
+  let found
 
   plugins.some(function (group) {
     return group.some(function (plugin) {

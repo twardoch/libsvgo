@@ -32,10 +32,10 @@ const description = 'moves elements attributes to the existing group wrapper'
  */
 const fn = function (item) {
   if (item.isElem('g') && !item.isEmpty() && item.content.length > 1) {
-    var intersection = {}
-    var hasTransform = false
-    var hasClip = item.hasAttr('clip-path') || item.hasAttr('mask')
-    var intersected = item.content.every(function (inner) {
+    let intersection = {}
+    let hasTransform = false
+    const hasClip = item.hasAttr('clip-path') || item.hasAttr('mask')
+    const intersected = item.content.every(function (inner) {
       if (inner.isElem() && inner.hasAttr()) {
         // don't mess with possible styles (hack until CSS parsing is implemented)
         if (inner.hasAttr('class')) return false
@@ -50,13 +50,13 @@ const fn = function (item) {
         return true
       }
     })
-    var allPath = item.content.every(function (inner) {
+    const allPath = item.content.every(function (inner) {
       return inner.isElem(pathElems)
     })
 
     if (intersected) {
       item.content.forEach(function (g) {
-        for (var name in intersection) {
+        for (const name in intersection) {
           if ((!allPath && !hasClip) || name !== 'transform') {
             g.removeAttr(name)
 
@@ -89,9 +89,9 @@ const fn = function (item) {
  * @return {Object} intersected attrs object
  */
 function intersectInheritableAttrs (a, b) {
-  var c = {}
+  const c = {}
 
-  for (var n in a) {
+  for (const n in a) {
     if (
       Object.prototype.hasOwnProperty.call(b, n) &&
       inheritableAttrs.indexOf(n) > -1 &&

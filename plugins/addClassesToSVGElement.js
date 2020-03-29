@@ -38,8 +38,8 @@ const fn = function (data, params) {
     return data
   }
 
-  var classNames = params.classNames || [ params.className ]
-  var svg = data.content[ 0 ]
+  const classNames = params.classNames || [ params.className ]
+  const svg = data.content[ 0 ]
 
   if (svg.isElem('svg')) {
     svg.class.add.apply(svg.class, classNames)

@@ -66,7 +66,6 @@ const path2js = function (path) {
       }
       // data item
     } else {
-      /* jshint boss: true */
       if (instruction === 'A' || instruction === 'a') {
         const newData = []
         for (let args; (args = regArcArgumentSequence.exec(data));) {
@@ -634,8 +633,6 @@ const intersects = function (path1, path2) {
 }
 
 function processSimplex (simplex, direction) {
-  /* jshint -W004 */
-
   // we only need to handle to 1-simplex and 2-simplex
   if (simplex.length === 2) { // 1-simplex
     const a = simplex[ 1 ]
@@ -791,8 +788,6 @@ function gatherPoints (points, item, index, path) {
  * @param points An array of [X, Y] coordinates
  */
 function convexHull (points) {
-  /* jshint -W004 */
-
   points.sort(function (a, b) {
     return a[ 0 ] === b[ 0 ] ? a[ 1 ] - b[ 1 ] : a[ 0 ] - b[ 0 ]
   })
@@ -847,7 +842,6 @@ function cross (o, a, b) {
  * Thanks to Dmitry Baranovskiy for his great work!
  */
 
-// jshint ignore: start
 function a2c (x1, y1, rx, ry, angle, largeArcFlag, sweepFlag, x2, y2, recursive) {
   // for more information of where this Math came from visit:
   // http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes

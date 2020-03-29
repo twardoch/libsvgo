@@ -10,9 +10,9 @@ const { describe, it } = global
 
 describe('plugins tests', function () {
   readdirSync(__dirname).forEach(function (file) {
-    var match = file.match(regFilename)
-    var index
-    var name
+    const match = file.match(regFilename)
+    let index
+    let name
 
     if (match) {
       name = match[ 1 ]
@@ -23,17 +23,16 @@ describe('plugins tests', function () {
       it(name + '.' + index, function () {
         return readFile(file)
           .then(function (data) {
-            var splitted = normalize(data).split(/\s*@@@\s*/)
-            var orig = splitted[ 0 ]
-            var should = splitted[ 1 ]
-            var params = splitted[ 2 ]
+            const splitted = normalize(data).split(/\s*@@@\s*/)
+            const orig = splitted[ 0 ]
+            const should = splitted[ 1 ]
+            const params = splitted[ 2 ]
 
-            var plugins = {}
-            var svgo
+            const plugins = {}
 
             plugins[ name ] = (params) ? JSON.parse(params) : true
 
-            svgo = new SVGO({
+            const svgo = new SVGO({
               full: true,
               plugins: [ plugins ],
               js2svg: { pretty: true }

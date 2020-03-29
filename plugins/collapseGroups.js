@@ -8,7 +8,6 @@ const active = true
 const description = 'collapses useless groups'
 
 function hasAnimatedAttr (item) {
-  /* jshint validthis:true */
   return (
     (item.isElem(animationElems) && item.hasAttr('attributeName', this)) ||
     (!item.isEmpty() && item.content.some(hasAnimatedAttr, this))
@@ -46,7 +45,7 @@ const fn = function (item) {
       if (g.isElem('g') && !g.isEmpty()) {
         // move group attibutes to the single content element
         if (g.hasAttr() && g.content.length === 1) {
-          var inner = g.content[ 0 ]
+          const inner = g.content[ 0 ]
 
           if (
             inner.isElem() && !inner.hasAttr('id') && !g.hasAttr('filter') &&

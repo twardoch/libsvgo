@@ -26,7 +26,7 @@ const fn = function (item) {
       return true
     }
 
-    var pathJS = path2js(item)
+    let pathJS = path2js(item)
     if (pathJS.length === 2) {
       // Use a closed clone of the path if it's too short for intersects()
       pathJS = JSON.parse(JSON.stringify(pathJS))
@@ -58,7 +58,7 @@ function hasTransform (item) {
  * @param {Object} svg svg element item
  */
 function parseViewBox (svg) {
-  var viewBoxData = ''
+  let viewBoxData = ''
   if (svg.hasAttr('viewBox')) {
     // Remove commas and plus signs, normalize and trim whitespace
     viewBoxData = svg.attr('viewBox').value
@@ -70,7 +70,7 @@ function parseViewBox (svg) {
   viewBoxData = viewBoxData.replace(/[,+]|px/g, ' ').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '')
 
   // Ensure that the dimensions are 4 values separated by space
-  var m = /^(-?\d*\.?\d+) (-?\d*\.?\d+) (\d*\.?\d+) (\d*\.?\d+)$/.exec(viewBoxData)
+  const m = /^(-?\d*\.?\d+) (-?\d*\.?\d+) (\d*\.?\d+) (\d*\.?\d+)$/.exec(viewBoxData)
   if (!m) {
     return
   }
@@ -83,7 +83,7 @@ function parseViewBox (svg) {
     bottom: parseFloat(m[ 2 ]) + parseFloat(m[ 4 ])
   }
 
-  var path = new JSAPI({
+  const path = new JSAPI({
     elem: 'path',
     prefix: '',
     local: 'path'
@@ -105,8 +105,8 @@ function parseViewBox (svg) {
  * @return {Boolean}
  */
 function pathMovesWithinViewBox (path) {
-  var regexp = /M\s*(-?\d*\.?\d+)(?!\d)\s*(-?\d*\.?\d+)/g
-  var m
+  const regexp = /M\s*(-?\d*\.?\d+)(?!\d)\s*(-?\d*\.?\d+)/g
+  let m
   while ((m = regexp.exec(path)) !== null) {
     if (m[ 1 ] >= viewBox.left && m[ 1 ] <= viewBox.right && m[ 2 ] >= viewBox.top && m[ 2 ] <= viewBox.bottom) {
       return true

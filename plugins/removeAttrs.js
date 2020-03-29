@@ -86,11 +86,11 @@ const fn = function (item, params) {
   }
 
   if (item.isElem()) {
-    var elemSeparator = typeof params.elemSeparator === 'string' ? params.elemSeparator : DEFAULT_SEPARATOR
-    var preserveCurrentColor = typeof params.preserveCurrentColor === 'boolean' ? params.preserveCurrentColor : false
+    const elemSeparator = typeof params.elemSeparator === 'string' ? params.elemSeparator : DEFAULT_SEPARATOR
+    const preserveCurrentColor = typeof params.preserveCurrentColor === 'boolean' ? params.preserveCurrentColor : false
 
     // prepare patterns
-    var patterns = params.attrs.map(function (pattern) {
+    const patterns = params.attrs.map(function (pattern) {
       // if no element separators (:), assume it's attribute name, and apply to all elements *regardless of value*
       if (pattern.indexOf(elemSeparator) === -1) {
         pattern = [ '.*', elemSeparator, pattern, elemSeparator, '.*' ].join('')
@@ -116,10 +116,10 @@ const fn = function (item, params) {
       if (pattern[ 0 ].test(item.elem)) {
         // loop attributes
         item.eachAttr(function (attr) {
-          var name = attr.name
-          var value = attr.value
-          var isFillCurrentColor = preserveCurrentColor && name === 'fill' && value === 'currentColor'
-          var isStrokeCurrentColor = preserveCurrentColor && name === 'stroke' && value === 'currentColor'
+          const name = attr.name
+          const value = attr.value
+          const isFillCurrentColor = preserveCurrentColor && name === 'fill' && value === 'currentColor'
+          const isStrokeCurrentColor = preserveCurrentColor && name === 'stroke' && value === 'currentColor'
 
           if (!(isFillCurrentColor || isStrokeCurrentColor)) {
             // matches attribute name

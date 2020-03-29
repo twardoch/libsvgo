@@ -1,8 +1,9 @@
-var FS = require('fs')
-var PATH = require('path')
-var SVGO = require('../lib/svgo')
-var filepath = PATH.resolve(__dirname, 'test.svg')
-var svgo = new SVGO({
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import SVGO from '../lib/svgo'
+
+const filepath = resolve(__dirname, 'test.svg')
+const svgo = new SVGO({
   plugins: [ {
     cleanupAttrs: true
   }, {
@@ -74,12 +75,9 @@ var svgo = new SVGO({
   } ]
 })
 
-FS.readFile(filepath, 'utf8', function (err, data) {
-  if (err) {
-    throw err
-  }
-
-  svgo.optimize(data, { path: filepath }).then(function (result) {
+const data = readFileSync(filepath, 'utf8')
+svgo.optimize(data, { path: filepath })
+  .then(function (result) {
     console.log(result)
 
     // {
@@ -92,4 +90,3 @@ FS.readFile(filepath, 'utf8', function (err, data) {
     //     }
     // }
   })
-})

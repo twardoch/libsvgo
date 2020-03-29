@@ -50,8 +50,8 @@ const fn = function (item, params) {
   if (item.elem) {
     item.eachAttr(function (attr) {
       if (colorsProps.indexOf(attr.name) > -1) {
-        var val = attr.value
-        var match
+        let val = attr.value
+        let match
 
         // Convert colors to currentColor
         if (params.currentColor) {
@@ -90,7 +90,7 @@ const fn = function (item, params) {
 
         // Convert hex to short name
         if (params.shortname) {
-          var lowerVal = val.toLowerCase()
+          const lowerVal = val.toLowerCase()
           if (lowerVal in colorsShortNames) {
             val = colorsShortNames[ lowerVal ]
           }

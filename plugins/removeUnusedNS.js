@@ -13,8 +13,8 @@ const description = 'removes unused namespaces declaration'
  * @author Kir Belevich
  */
 const fn = function (data) {
-  var svgElem
-  var xmlnsCollection = []
+  let svgElem
+  const xmlnsCollection = []
 
   /**
    * Remove namespace from collection.
@@ -22,7 +22,7 @@ const fn = function (data) {
    * @param {String} ns namescape name
    */
   function removeNSfromCollection (ns) {
-    var pos = xmlnsCollection.indexOf(ns)
+    const pos = xmlnsCollection.indexOf(ns)
 
     // if found - remove ns from the namespaces collection
     if (pos > -1) {
@@ -38,11 +38,11 @@ const fn = function (data) {
    * @return {Array} output items
    */
   function monkeys (items) {
-    var i = 0
-    var length = items.content.length
+    let i = 0
+    const length = items.content.length
 
     while (i < length) {
-      var item = items.content[ i ]
+      const item = items.content[ i ]
 
       if (item.isElem('svg')) {
         item.eachAttr(function (attr) {

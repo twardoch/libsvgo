@@ -34,12 +34,12 @@ const absoluteLengths = { // relative to px
  */
 const fn = function (item, params) {
   if (item.isElem()) {
-    var floatPrecision = params.floatPrecision
+    const floatPrecision = params.floatPrecision
 
     if (item.hasAttr('viewBox')) {
-      var nums = item.attr('viewBox').value.split(/\s,?\s*|,\s*/g)
+      const nums = item.attr('viewBox').value.split(/\s,?\s*|,\s*/g)
       item.attr('viewBox').value = nums.map(function (value) {
-        var num = +value
+        const num = +value
         return isNaN(num) ? value : +num.toFixed(floatPrecision)
       }).join(' ')
     }
@@ -48,17 +48,17 @@ const fn = function (item, params) {
       // The `version` attribute is a text string and cannot be rounded
       if (attr.name === 'version') { return }
 
-      var match = attr.value.match(regNumericValues)
+      const match = attr.value.match(regNumericValues)
 
       // if attribute value matches regNumericValues
       if (match) {
         // round it to the fixed precision
-        var num = +(+match[ 1 ]).toFixed(floatPrecision)
-        var units = match[ 3 ] || ''
+        let num = +(+match[ 1 ]).toFixed(floatPrecision)
+        let units = match[ 3 ] || ''
 
         // convert absolute values to pixels
         if (params.convertToPx && units && (units in absoluteLengths)) {
-          var pxNum = +(absoluteLengths[ units ] * match[ 1 ]).toFixed(floatPrecision)
+          const pxNum = +(absoluteLengths[ units ] * match[ 1 ]).toFixed(floatPrecision)
 
           if (String(pxNum).length < match[ 0 ].length) {
             num = pxNum

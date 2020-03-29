@@ -49,26 +49,26 @@ const description = 'inline styles (additional options)'
  */
 const fn = function (document, opts) {
   // collect <style/>s
-  var styleEls = document.querySelectorAll('style')
+  const styleEls = document.querySelectorAll('style')
 
   // no <styles/>s, nothing to do
   if (styleEls === null) {
     return document
   }
 
-  var styles = []
-  var selectors = []
+  const styles = []
+  let selectors = []
 
-  for (var styleEl of styleEls) {
+  for (const styleEl of styleEls) {
     if (styleEl.isEmpty() || styleEl.closestElem('foreignObject')) {
       // skip empty <style/>s or <foreignObject> content.
       continue
     }
 
-    var cssStr = getCssStr(styleEl)
+    const cssStr = getCssStr(styleEl)
 
     // collect <style/>s and their css ast
-    var cssAst = {}
+    let cssAst = {}
     try {
       cssAst = csstree.parse(cssStr, {
         parseValue: false,
@@ -88,24 +88,24 @@ const fn = function (document, opts) {
   }
 
   // filter for mediaqueries to be used or without any mediaquery
-  var selectorsMq = filterByMqs(selectors, opts.useMqs)
+  const selectorsMq = filterByMqs(selectors, opts.useMqs)
 
   // filter for pseudo elements to be used
-  var selectorsPseudo = filterByPseudos(selectorsMq, opts.usePseudos)
+  const selectorsPseudo = filterByPseudos(selectorsMq, opts.usePseudos)
 
   // remove PseudoClass from its SimpleSelector for proper matching
   cleanPseudos(selectorsPseudo)
 
   // stable sort selectors
-  var sortedSelectors = sortSelectors(selectorsPseudo).reverse()
+  const sortedSelectors = sortSelectors(selectorsPseudo).reverse()
 
-  var selector,
-    selectedEl
+  let selector
+  let selectedEl
 
   // match selectors
   for (selector of sortedSelectors) {
-    var selectorStr = csstree.generate(selector.item.data)
-    var selectedEls = null
+    const selectorStr = csstree.generate(selector.item.data)
+    let selectedEls = null
 
     try {
       selectedEls = document.querySelectorAll(selectorStr)
@@ -149,7 +149,7 @@ const fn = function (document, opts) {
           // no inline styles, external styles,                                    external styles used
           // inline styles,    external styles same   priority as inline styles,   inline   styles used
           // inline styles,    external styles higher priority than inline styles, external styles used
-          var styleDeclaration = csstreeToStyleDeclaration(styleCsstreeDeclaration)
+          const styleDeclaration = csstreeToStyleDeclaration(styleCsstreeDeclaration)
           if (selectedEl.style.getPropertyValue(styleDeclaration.name) !== null &&
             selectedEl.style.getPropertyPriority(styleDeclaration.name) >= styleDeclaration.priority) {
             return
@@ -182,7 +182,7 @@ const fn = function (document, opts) {
 
     for (selectedEl of selector.selectedEls) {
       // class
-      var firstSubSelector = selector.item.data.children.first()
+      const firstSubSelector = selector.item.data.children.first()
       if (firstSubSelector.type === 'ClassSelector') {
         selectedEl.class.remove(firstSubSelector.name)
       }
@@ -199,7 +199,7 @@ const fn = function (document, opts) {
   }
 
   // clean up now empty elements
-  for (var style of styles) {
+  for (const style of styles) {
     csstree.walk(style.cssAst, {
       visit: 'Rule', enter: function (node, item, list) {
         // clean up <style/> atrules without any rulesets left
@@ -221,13 +221,13 @@ const fn = function (document, opts) {
 
     if (style.cssAst.children.isEmpty()) {
       // clean up now emtpy <style/>s
-      var styleParentEl = style.styleEl.parentNode
+      const styleParentEl = style.styleEl.parentNode
       styleParentEl.spliceContent(styleParentEl.content.indexOf(style.styleEl), 1)
 
       if (styleParentEl.elem === 'defs' &&
         styleParentEl.content.length === 0) {
         // also clean up now empty <def/>s
-        var defsParentEl = styleParentEl.parentNode
+        const defsParentEl = styleParentEl.parentNode
         defsParentEl.spliceContent(defsParentEl.content.indexOf(styleParentEl), 1)
       }
 

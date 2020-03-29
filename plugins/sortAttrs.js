@@ -25,10 +25,10 @@ const params = {
  * @author Nikolay Frantsev
  */
 const fn = function (item, params) {
-  var attrs = []
-  var sorted = {}
-  var orderlen = params.order.length + 1
-  var xmlnsOrder = params.xmlnsOrder || 'front'
+  const attrs = []
+  const sorted = {}
+  const orderlen = params.order.length + 1
+  const xmlnsOrder = params.xmlnsOrder || 'front'
 
   if (item.elem) {
     item.eachAttr(function (attr) {
@@ -45,10 +45,10 @@ const fn = function (item, params) {
         return a.prefix < b.prefix ? -1 : 1
       }
 
-      var aindex = orderlen
-      var bindex = orderlen
+      let aindex = orderlen
+      let bindex = orderlen
 
-      for (var i = 0; i < params.order.length; i++) {
+      for (let i = 0; i < params.order.length; i++) {
         if (a.name === params.order[ i ]) {
           aindex = i
         } else if (a.name.indexOf(params.order[ i ] + '-') === 0) {
