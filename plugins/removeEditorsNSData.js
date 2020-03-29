@@ -1,17 +1,17 @@
-'use strict';
+import { editorNamespaces as __editorNamespaces } from './_collections'
+let editorNamespaces = __editorNamespaces
 
-exports.type = 'perItem';
+const type = 'perItem'
 
-exports.active = true;
+const active = true
 
-exports.description = 'removes editors namespaces, elements and attributes';
+const description = 'removes editors namespaces, elements and attributes'
 
-var editorNamespaces = require('./_collections').editorNamespaces,
-    prefixes = [];
+const prefixes = []
 
-exports.params = {
-    additionalNamespaces: []
-};
+const params = {
+  additionalNamespaces: []
+}
 
 /**
  * Remove editors namespaces, elements and attributes.
@@ -27,39 +27,41 @@ exports.params = {
  *
  * @author Kir Belevich
  */
-exports.fn = function(item, params) {
+const fn = function (item, params) {
+  if (Array.isArray(params.additionalNamespaces)) {
+    editorNamespaces = editorNamespaces.concat(params.additionalNamespaces)
+  }
 
-    if (Array.isArray(params.additionalNamespaces)) {
-        editorNamespaces = editorNamespaces.concat(params.additionalNamespaces);
+  if (item.elem) {
+    if (item.isElem('svg')) {
+      item.eachAttr(function (attr) {
+        if (attr.prefix === 'xmlns' && editorNamespaces.indexOf(attr.value) > -1) {
+          prefixes.push(attr.local)
+
+          // <svg xmlns:sodipodi="">
+          item.removeAttr(attr.name)
+        }
+      })
     }
 
-    if (item.elem) {
+    // <* sodipodi:*="">
+    item.eachAttr(function (attr) {
+      if (prefixes.indexOf(attr.prefix) > -1) {
+        item.removeAttr(attr.name)
+      }
+    })
 
-        if (item.isElem('svg')) {
-
-            item.eachAttr(function(attr) {
-                if (attr.prefix === 'xmlns' && editorNamespaces.indexOf(attr.value) > -1) {
-                    prefixes.push(attr.local);
-
-                    // <svg xmlns:sodipodi="">
-                    item.removeAttr(attr.name);
-                }
-            });
-
-        }
-
-        // <* sodipodi:*="">
-        item.eachAttr(function(attr) {
-            if (prefixes.indexOf(attr.prefix) > -1) {
-                item.removeAttr(attr.name);
-            }
-        });
-
-        // <sodipodi:*>
-        if (prefixes.indexOf(item.prefix) > -1) {
-            return false;
-        }
-
+    // <sodipodi:*>
+    if (prefixes.indexOf(item.prefix) > -1) {
+      return false
     }
+  }
+}
 
-};
+export {
+  type,
+  active,
+  description,
+  params,
+  fn
+}

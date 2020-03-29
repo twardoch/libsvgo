@@ -1,12 +1,11 @@
-'use strict';
+import { elemsGroups } from './_collections'
+const container = elemsGroups.container
 
-exports.type = 'perItemReverse';
+const type = 'perItemReverse'
 
-exports.active = true;
+const active = true
 
-exports.description = 'removes empty container elements';
-
-var container = require('./_collections').elemsGroups.container;
+const description = 'removes empty container elements'
 
 /**
  * Remove empty containers.
@@ -24,9 +23,14 @@ var container = require('./_collections').elemsGroups.container;
  *
  * @author Kir Belevich
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  return !(item.isElem(container) && !item.isElem('svg') && item.isEmpty() &&
+    (!item.isElem('pattern') || !item.hasAttrLocal('href')))
+}
 
-    return !(item.isElem(container) && !item.isElem('svg') && item.isEmpty() &&
-        (!item.isElem('pattern') || !item.hasAttrLocal('href')));
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

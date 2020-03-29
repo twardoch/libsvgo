@@ -1,16 +1,14 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
+const params = {
+  removeAny: true
+}
 
-exports.params = {
-    removeAny: true
-};
+const description = 'removes <desc>'
 
-exports.description = 'removes <desc>';
-
-var standardDescs = /^(Created with|Created using)/;
+const standardDescs = /^(Created with|Created using)/
 
 /**
  * Removes <desc>.
@@ -24,9 +22,16 @@ var standardDescs = /^(Created with|Created using)/;
  *
  * @author Daniel Wabyick
  */
-exports.fn = function(item, params) {
+const fn = function (item, params) {
+  return !item.isElem('desc') || !(
+    params.removeAny || item.isEmpty() || standardDescs.test(item.content[ 0 ].text)
+  )
+}
 
-    return !item.isElem('desc') || !(params.removeAny || item.isEmpty() ||
-            standardDescs.test(item.content[0].text));
-
-};
+export {
+  type,
+  active,
+  params,
+  description,
+  fn
+}

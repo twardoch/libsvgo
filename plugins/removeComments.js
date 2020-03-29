@@ -1,10 +1,8 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
-
-exports.description = 'removes comments';
+const description = 'removes comments'
 
 /**
  * Remove comments.
@@ -18,10 +16,15 @@ exports.description = 'removes comments';
  *
  * @author Kir Belevich
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  if (item.comment && item.comment.charAt(0) !== '!') {
+    return false
+  }
+}
 
-    if (item.comment && item.comment.charAt(0) !== '!') {
-        return false;
-    }
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

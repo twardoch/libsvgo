@@ -1,10 +1,8 @@
-'use strict';
+const type = 'full'
 
-exports.type = 'full';
+const active = true
 
-exports.active = true;
-
-exports.description = 'removes unused namespaces declaration';
+const description = 'removes unused namespaces declaration'
 
 /**
  * Remove unused namespaces declaration.
@@ -14,96 +12,91 @@ exports.description = 'removes unused namespaces declaration';
  *
  * @author Kir Belevich
  */
-exports.fn = function(data) {
+const fn = function (data) {
+  var svgElem
+  var xmlnsCollection = []
 
-    var svgElem,
-        xmlnsCollection = [];
+  /**
+   * Remove namespace from collection.
+   *
+   * @param {String} ns namescape name
+   */
+  function removeNSfromCollection (ns) {
+    var pos = xmlnsCollection.indexOf(ns)
 
-    /**
-     * Remove namespace from collection.
-     *
-     * @param {String} ns namescape name
-     */
-    function removeNSfromCollection(ns) {
+    // if found - remove ns from the namespaces collection
+    if (pos > -1) {
+      xmlnsCollection.splice(pos, 1)
+    }
+  }
 
-        var pos = xmlnsCollection.indexOf(ns);
+  /**
+   * Bananas!
+   *
+   * @param {Array} items input items
+   *
+   * @return {Array} output items
+   */
+  function monkeys (items) {
+    var i = 0
+    var length = items.content.length
 
-        // if found - remove ns from the namespaces collection
-        if (pos > -1) {
-            xmlnsCollection.splice(pos, 1);
+    while (i < length) {
+      var item = items.content[ i ]
+
+      if (item.isElem('svg')) {
+        item.eachAttr(function (attr) {
+          // collect namespaces
+          if (attr.prefix === 'xmlns' && attr.local) {
+            xmlnsCollection.push(attr.local)
+          }
+        })
+
+        // if svg element has ns-attr
+        if (xmlnsCollection.length) {
+          // save svg element
+          svgElem = item
+        }
+      }
+
+      if (xmlnsCollection.length) {
+        // check item for the ns-attrs
+        if (item.prefix) {
+          removeNSfromCollection(item.prefix)
         }
 
+        // check each attr for the ns-attrs
+        item.eachAttr(function (attr) {
+          removeNSfromCollection(attr.prefix)
+        })
+      }
+
+      // if nothing is found - go deeper
+      if (xmlnsCollection.length && item.content) {
+        monkeys(item)
+      }
+
+      i++
     }
 
-    /**
-     * Bananas!
-     *
-     * @param {Array} items input items
-     *
-     * @return {Array} output items
-     */
-    function monkeys(items) {
+    return items
+  }
 
-        var i = 0,
-            length = items.content.length;
+  data = monkeys(data)
 
-        while(i < length) {
+  // remove svg element ns-attributes if they are not used even once
+  if (xmlnsCollection.length) {
+    xmlnsCollection.forEach(function (name) {
+      svgElem.removeAttr('xmlns:' + name)
+    })
+  }
 
-            var item = items.content[i];
+  return data
+}
 
-            if (item.isElem('svg')) {
-
-                item.eachAttr(function(attr) {
-                    // collect namespaces
-                    if (attr.prefix === 'xmlns' && attr.local) {
-                        xmlnsCollection.push(attr.local);
-                    }
-                });
-
-                // if svg element has ns-attr
-                if (xmlnsCollection.length) {
-                    // save svg element
-                    svgElem = item;
-                }
-
-            }
-
-            if (xmlnsCollection.length) {
-
-                // check item for the ns-attrs
-                if (item.prefix) {
-                    removeNSfromCollection(item.prefix);
-                }
-
-                // check each attr for the ns-attrs
-                item.eachAttr(function(attr) {
-                    removeNSfromCollection(attr.prefix);
-                });
-
-            }
-
-            // if nothing is found - go deeper
-            if (xmlnsCollection.length && item.content) {
-                monkeys(item);
-            }
-
-            i++;
-
-        }
-
-        return items;
-
-    }
-
-    data = monkeys(data);
-
-    // remove svg element ns-attributes if they are not used even once
-    if (xmlnsCollection.length) {
-        xmlnsCollection.forEach(function(name) {
-            svgElem.removeAttr('xmlns:' + name);
-        });
-    }
-
-    return data;
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

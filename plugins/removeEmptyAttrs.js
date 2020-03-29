@@ -1,10 +1,8 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
-
-exports.description = 'removes empty attributes';
+const description = 'removes empty attributes'
 
 /**
  * Remove attributes with empty values.
@@ -14,16 +12,19 @@ exports.description = 'removes empty attributes';
  *
  * @author Kir Belevich
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  if (item.elem) {
+    item.eachAttr(function (attr) {
+      if (attr.value === '') {
+        item.removeAttr(attr.name)
+      }
+    })
+  }
+}
 
-    if (item.elem) {
-
-        item.eachAttr(function(attr) {
-            if (attr.value === '') {
-                item.removeAttr(attr.name);
-            }
-        });
-
-    }
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

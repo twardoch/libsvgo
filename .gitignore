@@ -1,11 +1,14 @@
-node_modules/
-lib-cov/
-html-report/
-lcov.info
-bin/svgo-profiling
-*.sublime-*
+# Logs
+logs
 *.log
-.DS_Store
+
+# Dependency directory
+node_modules
+
+# WebStorm configuration
 .idea
-.vscode
-.npmrc
+
+# distribute file
+**/*-gitignore/**
+**/*-gitignore*
+/*.tgz

@@ -1,10 +1,8 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = false
 
-exports.active = false;
-
-exports.description = 'removes <script> elements (disabled by default)';
+const description = 'removes <script> elements (disabled by default)'
 
 /**
  * Remove <script>.
@@ -16,8 +14,13 @@ exports.description = 'removes <script> elements (disabled by default)';
  *
  * @author Patrick Klingemann
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  return !item.isElem('script')
+}
 
-    return !item.isElem('script');
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

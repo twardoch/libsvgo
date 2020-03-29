@@ -1,12 +1,10 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
+const description = 'removes viewBox attribute when possible'
 
-exports.description = 'removes viewBox attribute when possible';
-
-var viewBoxElems = ['svg', 'pattern', 'symbol'];
+var viewBoxElems = [ 'svg', 'pattern', 'symbol' ]
 
 /**
  * Remove viewBox attr which coincides with a width/height box.
@@ -23,26 +21,29 @@ var viewBoxElems = ['svg', 'pattern', 'symbol'];
  *
  * @author Kir Belevich
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  if (
+    item.isElem(viewBoxElems) &&
+    item.hasAttr('viewBox') &&
+    item.hasAttr('width') &&
+    item.hasAttr('height')
+  ) {
+    var nums = item.attr('viewBox').value.split(/[ ,]+/g)
 
     if (
-        item.isElem(viewBoxElems) &&
-        item.hasAttr('viewBox') &&
-        item.hasAttr('width') &&
-        item.hasAttr('height')
+      nums[ 0 ] === '0' &&
+      nums[ 1 ] === '0' &&
+      item.attr('width').value.replace(/px$/, '') === nums[ 2 ] && // could use parseFloat too
+      item.attr('height').value.replace(/px$/, '') === nums[ 3 ]
     ) {
-
-        var nums = item.attr('viewBox').value.split(/[ ,]+/g);
-
-        if (
-            nums[0] === '0' &&
-            nums[1] === '0' &&
-            item.attr('width').value.replace(/px$/, '') === nums[2] && // could use parseFloat too
-            item.attr('height').value.replace(/px$/, '') === nums[3]
-        ) {
-            item.removeAttr('viewBox');
-        }
-
+      item.removeAttr('viewBox')
     }
+  }
+}
 
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

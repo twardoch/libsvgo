@@ -1,10 +1,8 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
-
-exports.description = 'removes doctype declaration';
+const description = 'removes doctype declaration'
 
 /**
  * Remove DOCTYPE declaration.
@@ -31,10 +29,15 @@ exports.description = 'removes doctype declaration';
  *
  * @author Kir Belevich
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  if (item.doctype) {
+    return false
+  }
+}
 
-    if (item.doctype) {
-        return false;
-    }
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

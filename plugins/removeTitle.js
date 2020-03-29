@@ -1,10 +1,8 @@
-'use strict';
+const type = 'perItem'
 
-exports.type = 'perItem';
+const active = true
 
-exports.active = true;
-
-exports.description = 'removes <title>';
+const description = 'removes <title>'
 
 /**
  * Remove <title>.
@@ -16,8 +14,13 @@ exports.description = 'removes <title>';
  *
  * @author Igor Kalashnikov
  */
-exports.fn = function(item) {
+const fn = function (item) {
+  return !item.isElem('title')
+}
 
-    return !item.isElem('title');
-
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

@@ -1,12 +1,10 @@
-'use strict';
+const type = 'full'
 
-exports.type = 'full';
+const active = false
 
-exports.active = false;
+const description = 'adds attributes to an outer <svg> element'
 
-exports.description = 'adds attributes to an outer <svg> element';
-
-var ENOCLS = `Error in plugin "addAttributesToSVGElement": absent parameters.
+const ENOCLS = `Error in plugin "addAttributesToSVGElement": absent parameters.
 It should have a list of "attributes" or one "attribute".
 Config example:
 
@@ -22,7 +20,7 @@ plugins:
 - addAttributesToSVGElement:
     attributes:
         - focusable: false
-        - data-image: icon`;
+        - data-image: icon`
 
 /**
  * Add attributes to an outer <svg> element. Example config:
@@ -43,40 +41,46 @@ plugins:
  *
  * @author April Arcus
  */
-exports.fn = function(data, params) {
-    if (!params || !(Array.isArray(params.attributes) || params.attribute)) {
-        console.error(ENOCLS);
-        return data;
-    }
+const fn = function (data, params) {
+  if (!params || !(Array.isArray(params.attributes) || params.attribute)) {
+    console.error(ENOCLS)
+    return data
+  }
 
-    var attributes = params.attributes || [ params.attribute ],
-        svg = data.content[0];
+  const attributes = params.attributes || [ params.attribute ]
+  const svg = data.content[ 0 ]
 
-    if (svg.isElem('svg')) {
-        attributes.forEach(function (attribute) {
-            if (typeof attribute === 'string') {
-                if (!svg.hasAttr(attribute)) {
-                    svg.addAttr({
-                        name: attribute,
-                        prefix: '',
-                        local: attribute
-                    });
-                }
-            } else if (typeof attribute === 'object') {
-                Object.keys(attribute).forEach(function (key) {
-                    if (!svg.hasAttr(key)) {
-                        svg.addAttr({
-                            name: key,
-                            value: attribute[key],
-                            prefix: '',
-                            local: key
-                        });
-                    }
-                });
-            }
-        });
-    }
+  if (svg.isElem('svg')) {
+    attributes.forEach(function (attribute) {
+      if (typeof attribute === 'string') {
+        if (!svg.hasAttr(attribute)) {
+          svg.addAttr({
+            name: attribute,
+            prefix: '',
+            local: attribute
+          })
+        }
+      } else if (typeof attribute === 'object') {
+        Object.keys(attribute).forEach(function (key) {
+          if (!svg.hasAttr(key)) {
+            svg.addAttr({
+              name: key,
+              value: attribute[ key ],
+              prefix: '',
+              local: key
+            })
+          }
+        })
+      }
+    })
+  }
 
-    return data;
+  return data
+}
 
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}

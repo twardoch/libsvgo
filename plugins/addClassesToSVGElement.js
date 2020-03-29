@@ -1,12 +1,10 @@
-'use strict';
+const type = 'full'
 
-exports.type = 'full';
+const active = false
 
-exports.active = false;
+const description = 'adds classnames to an outer <svg> element'
 
-exports.description = 'adds classnames to an outer <svg> element';
-
-var ENOCLS = `Error in plugin "addClassesToSVGElement": absent parameters.
+const ENOCLS = `Error in plugin "addClassesToSVGElement": absent parameters.
 It should have a list of classes in "classNames" or one "className".
 Config example:
 
@@ -17,7 +15,7 @@ plugins:
 plugins:
 - addClassesToSVGElement:
     classNames: ["mySvg", "size-big"]
-`;
+`
 
 /**
  * Add classnames to an outer <svg> element. Example config:
@@ -32,19 +30,27 @@ plugins:
  *
  * @author April Arcus
  */
-exports.fn = function(data, params) {
-    if (!params || !(Array.isArray(params.classNames) && params.classNames.some(String) || params.className)) {
-        console.error(ENOCLS);
-        return data;
-    }
+const fn = function (data, params) {
+  if (!params || !(
+    (Array.isArray(params.classNames) && params.classNames.some(String)) || params.className
+  )) {
+    console.error(ENOCLS)
+    return data
+  }
 
-    var classNames = params.classNames || [ params.className ],
-        svg = data.content[0];
+  var classNames = params.classNames || [ params.className ]
+  var svg = data.content[ 0 ]
 
-    if (svg.isElem('svg')) {
-        svg.class.add.apply(svg.class, classNames);
-    }
+  if (svg.isElem('svg')) {
+    svg.class.add.apply(svg.class, classNames)
+  }
 
-    return data;
+  return data
+}
 
-};
+export {
+  type,
+  active,
+  description,
+  fn
+}
