@@ -1,10 +1,11 @@
-import CONFIG from '../../lib/svgo/config'
+import { CONFIG_LITE } from '../../lib/svgo/config-lite'
+import { PLUGINS_DEFAULT_LIST } from '../../plugins/__default'
 
 const { describe, it } = global
 
 describe('config', function () {
   describe('default config', function () {
-    const config = CONFIG()
+    const config = CONFIG_LITE({ plugins: PLUGINS_DEFAULT_LIST })
 
     it('should be an instance of Object', function () {
       config.should.be.an.instanceOf(Object)
@@ -18,155 +19,4 @@ describe('config', function () {
       config.plugins.should.be.an.instanceOf(Array)
     })
   })
-
-  describe('extend config with object', function () {
-    const config = CONFIG({
-      multipass: true,
-      plugins: [
-        { removeDoctype: false },
-        { convertColors: { shorthex: false } },
-        { removeRasterImages: { param: true } }
-      ]
-    })
-    const removeDoctype = getPlugin('removeDoctype', config.plugins)
-    const convertColors = getPlugin('convertColors', config.plugins)
-    const removeRasterImages = getPlugin('removeRasterImages', config.plugins)
-
-    it('should have "multipass"', function () {
-      config.multipass.should.be.true()
-    })
-
-    it('removeDoctype plugin should be disabled', function () {
-      removeDoctype.active.should.be.false()
-    })
-
-    describe('enable plugin with params object', function () {
-      it('removeRasterImages plugin should be enabled', function () {
-        removeRasterImages.active.should.be.true()
-      })
-
-      it('removeRasterImages plugin should have property "params"', function () {
-        removeRasterImages.should.have.property('params')
-      })
-
-      it('"params" should be an instance of Object', function () {
-        removeRasterImages.params.should.be.an.instanceOf(Object)
-      })
-
-      it('"params" should have property "param" with value of true', function () {
-        removeRasterImages.params.should.have.property('param', true)
-      })
-    })
-
-    describe('extend plugin params with object', function () {
-      it('convertColors plugin should have property "params"', function () {
-        convertColors.should.have.property('params')
-      })
-
-      it('"params" should be an instance of Object', function () {
-        convertColors.params.should.be.an.instanceOf(Object)
-      })
-
-      it('"params" should have property "shorthex" with value of false', function () {
-        convertColors.params.should.have.property('shorthex', false)
-      })
-
-      it('"params" should have property "rgb2hex" with value of true', function () {
-        convertColors.params.should.have.property('rgb2hex', true)
-      })
-    })
-  })
-
-  describe('replace default config with custom', function () {
-    const config = CONFIG({
-      full: true,
-      multipass: true,
-      floatPrecision: 2,
-      plugins: [
-        { cleanupNumericValues: true }
-      ]
-    })
-    const cleanupNumericValues = getPlugin('cleanupNumericValues', config.plugins)
-
-    it('should have "multipass"', function () {
-      config.multipass.should.be.true()
-    })
-
-    it('config.plugins should have length 1', function () {
-      config.plugins.should.have.length(1)
-    })
-
-    it('cleanupNumericValues plugin should be enabled', function () {
-      cleanupNumericValues.active.should.be.true()
-    })
-
-    it('cleanupNumericValues plugin should have floatPrecision set from parameters', function () {
-      cleanupNumericValues.params.floatPrecision.should.be.equal(2)
-    })
-  })
-  describe('custom plugins', function () {
-    describe('extend config with custom plugin', function () {
-      const config = CONFIG({
-        plugins: [
-          {
-            aCustomPlugin: {
-              type: 'perItem',
-              fn: function () { }
-            }
-          }
-        ]
-      })
-      const customPlugin = getPlugin('aCustomPlugin', config.plugins)
-
-      it('custom plugin should be enabled', function () {
-        customPlugin.active.should.be.true()
-      })
-
-      it('custom plugin should have been given a name', function () {
-        customPlugin.name.should.equal('aCustomPlugin')
-      })
-    })
-
-    describe('replace default config with custom plugin', function () {
-      const config = CONFIG({
-        full: true,
-        plugins: [
-          {
-            aCustomPlugin: {
-              type: 'perItem',
-              fn: function () { }
-            }
-          }
-        ]
-      })
-      const customPlugin = getPlugin('aCustomPlugin', config.plugins)
-
-      it('config.plugins should have length 1', function () {
-        config.plugins.should.have.length(1)
-      })
-
-      it('custom plugin should be enabled', function () {
-        customPlugin.active.should.be.true()
-      })
-
-      it('custom plugin should have been given a name', function () {
-        customPlugin.name.should.equal('aCustomPlugin')
-      })
-    })
-  })
 })
-
-function getPlugin (name, plugins) {
-  let found
-
-  plugins.some(function (group) {
-    return group.some(function (plugin) {
-      if (plugin.name === name) {
-        found = plugin
-        return true
-      }
-    })
-  })
-
-  return found
-}

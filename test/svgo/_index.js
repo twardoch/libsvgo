@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
-import SVGO from '../../lib/svgo'
+import { SVGO } from '../../lib/svgo'
 
 const EOL = '\n'
 const regEOL = new RegExp(EOL, 'g')

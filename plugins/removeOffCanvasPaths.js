@@ -1,4 +1,4 @@
-import JSAPI from '../lib/svgo/jsAPI'
+import { JSAPI } from '../lib/svgo/jsAPI'
 import { intersects, path2js } from './_path'
 
 const name = 'removeOffCanvasPaths'

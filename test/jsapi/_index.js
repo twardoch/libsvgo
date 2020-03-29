@@ -1,5 +1,5 @@
-import SVGO from '../../lib/svgo'
-import JSAPI from '../../lib/svgo/jsAPI'
+import { SVGO } from '../../lib/svgo'
+import { JSAPI } from '../../lib/svgo/jsAPI'
 
 const { describe, it } = global
 

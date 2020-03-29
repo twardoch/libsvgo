@@ -1,6 +1,6 @@
 import { readdirSync, readFile as __readFile } from 'fs'
 import { resolve } from 'path'
-import SVGO from '../../lib/svgo'
+import { SVGO } from '../../lib/svgo'
 
 const EOL = '\n'
 const regEOL = new RegExp(EOL, 'g')
@@ -28,13 +28,13 @@ describe('plugins tests', function () {
             const should = splitted[ 1 ]
             const params = splitted[ 2 ]
 
-            const plugins = {}
-
-            plugins[ name ] = (params) ? JSON.parse(params) : true
+            const plugin = { ...require(`../../plugins/${name}`) }
+            plugin.active = true
+            if (params) plugin.params = { ...plugin.params, ...JSON.parse(params) }
 
             const svgo = new SVGO({
               full: true,
-              plugins: [ plugins ],
+              plugins: [ plugin ],
               js2svg: { pretty: true }
             })
 

@@ -1,10 +1,10 @@
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import SHOULD from 'should'
-import JSAPI from '../../lib/svgo/jsAPI'
-import CSSClassList from '../../lib/svgo/css-class-list'
-import CSSStyleDeclaration from '../../lib/svgo/css-style-declaration'
-import SVG2JS from '../../lib/svgo/svg2js'
+import { JSAPI } from '../../lib/svgo/jsAPI'
+import { CSSClassList } from '../../lib/svgo/css-class-list'
+import { CSSStyleDeclaration } from '../../lib/svgo/css-style-declaration'
+import { SVG2JS } from '../../lib/svgo/svg2js'
 
 const { describe, it, before } = global
 
