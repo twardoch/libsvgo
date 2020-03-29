@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVGO browser test</title>
+  <script src="../output-gitignore/webpack/SVGO.js"></script>
+</head>
+<body>
+
+<pre id="LOG"></pre>
+
+<script>
+  const { SVGO, fetch } = window
+
+  const logText = (...textList) => {
+    console.log(...textList)
+    document.querySelector('#LOG').innerText += `${textList.join(' ')}\n`
+  }
+
+  const main = async () => {
+    const filepath = './test.svg'
+    const data = await (await fetch(filepath)).text()
+    logText(`[data]`, JSON.stringify(data, null, 2))
+
+    const svgo = new SVGO()
+    const result = await svgo.optimize(data, { path: filepath })
+    logText(`[result]`, JSON.stringify(result, null, 2))
+    // {
+    //   // optimized SVG data string
+    //   data: '<svg width="10" height="20">test</svg>',
+    //   // additional info such as width/height
+    //   info: { width: '10', height: '20' },
+    //   path: '.../test.svg'
+    // }
+  }
+
+  main().catch(console.error)
+</script>
+</body>
+</html>
