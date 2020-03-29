@@ -25,8 +25,7 @@
     "css-tree": "1.0.0-alpha.37",
     "csso": "^4.0.3",
     "sax": "~1.2.4",
-    "stable": "^0.1.8",
-    "unquote": "~1.1.1"
+    "stable": "^0.1.8"
   },
   "devDependencies": {
     "@dr-js/core": "0.3.0-dev.1",

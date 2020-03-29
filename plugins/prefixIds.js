@@ -1,6 +1,6 @@
 // import { basename } from 'path'
 import csstree from 'css-tree'
-import unquote from 'unquote'
+// import unquote from 'unquote'
 import { referencesProps } from './_collections.js'
 
 const type = 'perItem'
@@ -17,6 +17,20 @@ const description = 'prefix IDs'
 
 const rxId = /^#(.*)$/ // regular expression for matching an ID + extracing its name
 let addPrefix = null
+
+const CHAR_CODE_QUOTE_SINGLE = 39 // `'`.charCodeAt(0)
+const CHAR_CODE_QUOTE_DOUBLE = 34 // `"`.charCodeAt(0)
+const unquote = (string = '') => { // optimized code from: https://www.npmjs.com/package/unquote/v/1.1.1
+  const { length } = string
+  if (length !== 0) {
+    const firstCharCode = string.charCodeAt(0)
+    const lastCharCode = string.charCodeAt(length - 1)
+    const dropFirst = firstCharCode === CHAR_CODE_QUOTE_SINGLE || firstCharCode === CHAR_CODE_QUOTE_DOUBLE
+    const dropLast = lastCharCode === CHAR_CODE_QUOTE_SINGLE || lastCharCode === CHAR_CODE_QUOTE_DOUBLE
+    string = string.slice(dropFirst ? 1 : 0, dropLast ? length - 1 : length)
+  }
+  return string
+}
 
 // Escapes a string for being used as ID
 const escapeIdentifierName = function (str) {
