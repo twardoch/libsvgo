@@ -27,7 +27,7 @@ The core code of [SVGO][l:svgo], optimized to be portable
         for use with `node` + `@babel/register`, keep `import / export` and readability
     - `libsvgo/webpack/SVGO.js`:
         all-in-one packaged version,
-        can be used in browser like `<script src="https://unpkg.com/dr-js/libsvgo/webpack/SVGO.js"></script>`,
+        can be used in browser like `<script src="https://unpkg.com/libsvgo/webpack/SVGO.js"></script>`,
         and provide `window.SVGO`
         (experimental)
 - 📁 [test/](test/)
