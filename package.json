@@ -37,11 +37,14 @@
     "node": ">=12.13",
     "npm": ">=6.12"
   },
+  "config": {
+    "// NOTE: match version between `csso` and `css-tree` to prevent duplication": ""
+  },
   "dependencies": {
     "css-select": "^2.1.0",
     "css-select-base-adapter": "^0.1.1",
-    "css-tree": "1.0.0-alpha.37",
-    "csso": "^4.0.3",
+    "css-tree": "1.0.0-alpha.39",
+    "csso": "4.0.3",
     "sax": "~1.2.4",
     "stable": "^0.1.8"
   },

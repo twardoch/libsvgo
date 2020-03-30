@@ -42,7 +42,7 @@ const processOutput = async ({ logger }) => {
 }
 
 runMain(async (logger) => {
-  const packageJSON = await initOutput({ fromRoot, fromOutput, copyPathList: [ 'README.md', 'LICENSE' ], pathLicenseFile: false, logger })
+  const packageJSON = await initOutput({ fromRoot, fromOutput, deleteKeyList: [ 'private', 'scripts', 'config', 'devDependencies' ], copyPathList: [ 'README.md', 'LICENSE' ], pathLicenseFile: false, logger })
   if (!argvFlag('pack')) return
   const isTest = argvFlag('test', 'publish', 'publish-dev')
   await buildOutput({ isTest, logger })
