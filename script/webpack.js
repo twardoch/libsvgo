@@ -12,7 +12,7 @@ runMain(async (logger) => {
   const { mode, isWatch, profileOutput, getCommonWebpackConfig } = await commonFlag({ fromRoot, logger })
 
   const config = getCommonWebpackConfig({
-    output: { path: fromOutput('webpack'), filename: 'SVGO.js', library: 'SVGO', libraryExport: 'default', libraryTarget: 'umd' },
+    output: { path: fromOutput('webpack'), filename: 'SVGO.js', library: 'SVGO', libraryExport: 'default', libraryTarget: 'umd', globalObject: `(typeof self !== 'undefined' ? self : this)` },
     entry: { 'svgo': './lib/svgo.webpack-entry' }
   })
 
