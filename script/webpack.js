@@ -12,8 +12,8 @@ runMain(async (logger) => {
   const { mode, isWatch, profileOutput, getCommonWebpackConfig } = await commonFlag({ fromRoot, logger })
 
   const config = getCommonWebpackConfig({
-    output: { path: fromOutput('webpack'), filename: 'SVGO.js', library: 'SVGO', libraryExport: 'SVGO', libraryTarget: 'umd' },
-    entry: { 'svgo': './lib/svgo' }
+    output: { path: fromOutput('webpack'), filename: 'SVGO.js', library: 'SVGO', libraryExport: 'default', libraryTarget: 'umd' },
+    entry: { 'svgo': './lib/svgo.webpack-entry' }
   })
 
   logger.padLog(`compile with webpack mode: ${mode}, isWatch: ${Boolean(isWatch)}`)
