@@ -3,10 +3,12 @@
 [![i:npm]][l:npm]
 [![i:ci]][l:ci]
 [![i:size]][l:size]
+[![i:npm-dev]][l:npm]
 
 The core code of [SVGO][l:svgo], optimized to be portable
 
 [i:npm]: https://img.shields.io/npm/v/libsvgo
+[i:npm-dev]: https://img.shields.io/npm/v/libsvgo/dev
 [l:npm]: https://npm.im/libsvgo
 [i:ci]: https://img.shields.io/github/workflow/status/dr-js/libsvgo/ci-test
 [l:ci]: https://github.com/dr-js/libsvgo/actions?query=workflow:ci-test
