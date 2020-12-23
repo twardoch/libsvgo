@@ -4,7 +4,6 @@ import { execSync } from 'child_process'
 import { getSourceJsFileListFromPathList } from '@dr-js/dev/module/node/filePreset'
 import { initOutput, packOutput, clearOutput, verifyGitStatusClean, publishOutput } from '@dr-js/dev/module/output'
 import { getTerserOption, minifyFileListWithTerser } from '@dr-js/dev/module/minify'
-import { processFileList, fileProcessorBabel, fileProcessorWebpack } from '@dr-js/dev/module/fileProcessor'
 import { runMain, argvFlag } from '@dr-js/dev/module/main'
 
 const PATH_ROOT = resolve(__dirname, '..')
@@ -30,14 +29,11 @@ const buildOutput = async ({ isTest, logger }) => {
 const processOutput = async ({ logger }) => {
   const fileListLibrary = await getSourceJsFileListFromPathList([ 'lib', 'plugins' ], fromOutput)
   const fileListModule = await getSourceJsFileListFromPathList([ 'module' ], fromOutput)
-  const fileListBabel = [ ...fileListLibrary, ...fileListModule ]
   const fileListWebpack = await getSourceJsFileListFromPathList([ 'webpack' ], fromOutput)
   let sizeReduce = 0
   sizeReduce += await minifyFileListWithTerser({ fileList: fileListLibrary, option: getTerserOption(), rootPath: PATH_OUTPUT, logger })
   sizeReduce += await minifyFileListWithTerser({ fileList: fileListModule, option: getTerserOption({ isReadable: true }), rootPath: PATH_OUTPUT, logger })
-  sizeReduce += await processFileList({ fileList: fileListBabel, processor: fileProcessorBabel, rootPath: PATH_OUTPUT, logger })
   sizeReduce += await minifyFileListWithTerser({ fileList: fileListWebpack, option: getTerserOption(), rootPath: PATH_OUTPUT, logger })
-  sizeReduce += await processFileList({ fileList: fileListWebpack, processor: fileProcessorWebpack, rootPath: PATH_OUTPUT, logger })
   logger.log(`total size reduce: ${sizeReduce}B`)
 }
 
