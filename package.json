@@ -27,9 +27,12 @@
     "test-source": "dr-dev --TR @babel/register should -T ./test/",
     "test-output-library": "dr-dev --TR should -T ./output-gitignore/test/",
     "test-output-module": "dr-dev --TR @babel/register should -T ./output-gitignore/module/test/",
+    "// example =====================": "",
+    "example-node": "node -r @babel/register ./examples/test.js",
+    "example-webpack-node": "node ./examples/test-output-webpack.js",
+    "example-webpack-browser": "dr-js -o http://localhost:8080/examples/test-output-webpack.html && dr-js --ssss -H :8080 -R ./",
     "// =============================": "",
     "analyze-stat": "npx webpack-bundle-analyzer .temp-gitignore/profile-stat.json output-gitignore/webpack",
-    "example": "node -r @babel/register ./examples/test.js",
     "test": "npm run script-pack-test",
     "lint": "eslint ./lib/ ./plugins/ ./test/"
   },

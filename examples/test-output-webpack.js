@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs')
 const { resolve } = require('path')
-const SVGO = require('../output-gitignore/webpack/SVGO')
+const SVGO = require('../output-gitignore/webpack/SVGO') // need to `npm run script-pack` first to generate output
 
 const filepath = resolve(__dirname, 'test.svg')
 const data = readFileSync(filepath, 'utf8')
