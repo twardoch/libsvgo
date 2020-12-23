@@ -55,6 +55,8 @@ runMain(async (logger) => {
   isTest && execShell('npm run test-output-library')
   isTest && execShell('npm run test-output-module')
   isTest && execShell('npm run script-clear-output-test')
+  isTest && execShell('npm run example-node')
+  isTest && execShell('npm run example-webpack-node')
   await clearOutput({ fromOutput, logger })
   isTest && await verifyGitStatusClean({ fromRoot, logger })
   const pathPackagePack = await packOutput({ fromRoot, fromOutput, logger })
