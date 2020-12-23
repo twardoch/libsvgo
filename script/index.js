@@ -1,8 +1,8 @@
 import { resolve } from 'path'
 import { execSync } from 'child_process'
 
-import { getScriptFileListFromPathList } from '@dr-js/dev/module/node/file'
-import { initOutput, packOutput, verifyGitStatusClean, publishOutput } from '@dr-js/dev/module/output'
+import { getSourceJsFileListFromPathList } from '@dr-js/dev/module/node/filePreset'
+import { initOutput, packOutput, clearOutput, verifyGitStatusClean, publishOutput } from '@dr-js/dev/module/output'
 import { getTerserOption, minifyFileListWithTerser } from '@dr-js/dev/module/minify'
 import { processFileList, fileProcessorBabel, fileProcessorWebpack } from '@dr-js/dev/module/fileProcessor'
 import { runMain, argvFlag } from '@dr-js/dev/module/main'
@@ -28,10 +28,10 @@ const buildOutput = async ({ isTest, logger }) => {
 }
 
 const processOutput = async ({ logger }) => {
-  const fileListLibrary = await getScriptFileListFromPathList([ 'lib', 'plugins' ], fromOutput)
-  const fileListModule = await getScriptFileListFromPathList([ 'module' ], fromOutput)
+  const fileListLibrary = await getSourceJsFileListFromPathList([ 'lib', 'plugins' ], fromOutput)
+  const fileListModule = await getSourceJsFileListFromPathList([ 'module' ], fromOutput)
   const fileListBabel = [ ...fileListLibrary, ...fileListModule ]
-  const fileListWebpack = await getScriptFileListFromPathList([ 'webpack' ], fromOutput)
+  const fileListWebpack = await getSourceJsFileListFromPathList([ 'webpack' ], fromOutput)
   let sizeReduce = 0
   sizeReduce += await minifyFileListWithTerser({ fileList: fileListLibrary, option: getTerserOption(), rootPath: PATH_OUTPUT, logger })
   sizeReduce += await minifyFileListWithTerser({ fileList: fileListModule, option: getTerserOption({ isReadable: true }), rootPath: PATH_OUTPUT, logger })
@@ -42,7 +42,12 @@ const processOutput = async ({ logger }) => {
 }
 
 runMain(async (logger) => {
-  const packageJSON = await initOutput({ fromRoot, fromOutput, deleteKeyList: [ 'private', 'scripts', 'config', 'devDependencies' ], copyPathList: [ 'README.md', 'LICENSE' ], pathLicenseFile: false, logger })
+  const packageJSON = await initOutput({
+    fromRoot, fromOutput, logger,
+    deleteKeyList: [ 'private', 'scripts', 'config', 'devDependencies' ],
+    copyPathList: [ 'README.md', 'LICENSE' ],
+    pathAutoLicenseFile: false
+  })
   if (!argvFlag('pack')) return
   const isTest = argvFlag('test', 'publish', 'publish-dev')
   await buildOutput({ isTest, logger })
@@ -54,7 +59,8 @@ runMain(async (logger) => {
   isTest && execShell('npm run test-output-library')
   isTest && execShell('npm run test-output-module')
   isTest && execShell('npm run script-clear-output-test')
+  await clearOutput({ fromOutput, logger })
   isTest && await verifyGitStatusClean({ fromRoot, logger })
   const pathPackagePack = await packOutput({ fromRoot, fromOutput, logger })
-  await publishOutput({ flagList: process.argv, packageJSON, pathPackagePack, logger })
+  await publishOutput({ packageJSON, pathPackagePack, logger })
 })

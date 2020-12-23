@@ -742,7 +742,7 @@ function gatherPoints (points, item, index, path) {
       addPoint(subPath, [ 0.5 * (data[ 0 ] + data[ 2 ]), 0.5 * (data[ 1 ] + data[ 3 ]) ])
       prevCtrlPoint = [ data[ 2 ] - data[ 0 ], data[ 3 ] - data[ 1 ] ]
       break
-    case 'A':
+    case 'A': {
       // Convert the arc to bezier curves and use the same approximation
       const curves = a2c.apply(0, basePoint.concat(data))
       for (let cData; (cData = curves.splice(0, 6).map(toAbsolute)).length;) {
@@ -752,6 +752,7 @@ function gatherPoints (points, item, index, path) {
         if (curves.length) addPoint(subPath, basePoint = cData.slice(-2))
       }
       break
+    }
   }
   // Save final command coordinates
   if (data && data.length >= 2) addPoint(subPath, data.slice(-2))

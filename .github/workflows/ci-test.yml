@@ -1,21 +1,26 @@
 name: ci-test
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - '**'
 
 jobs:
   build:
     strategy:
+      fail-fast: false # allow all test to run to the end
       matrix:
-        node-version: [ 12.x, 13.x ]
+        os: [ ubuntu-latest ] # [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version: [ 12.x, 14.x ]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Setup Git repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2 # https://github.com/actions/checkout
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v1 # https://github.com/actions/setup-node
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -28,5 +33,3 @@ jobs:
       - run: npm ci
 
       - run: npm test
-        env:
-          CI: true

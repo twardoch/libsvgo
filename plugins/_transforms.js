@@ -203,7 +203,7 @@ function transformToMatrix (transform) {
       // [sx, 0, 0, sy, 0, 0]
       matrix = [ transform.data[ 0 ], 0, 0, transform.data[ 1 ] || transform.data[ 0 ], 0, 0 ]
       break
-    case 'rotate':
+    case 'rotate': {
       // [cos(a), sin(a), -sin(a), cos(a), x, y]
       const cos = mth.cos(transform.data[ 0 ])
       const sin = mth.sin(transform.data[ 0 ])
@@ -212,6 +212,7 @@ function transformToMatrix (transform) {
 
       matrix = [ cos, sin, -sin, cos, (1 - cos) * cx + sin * cy, (1 - cos) * cy - sin * cx ]
       break
+    }
     case 'skewX':
       // [1, 0, tan(a), 1, 0, 0]
       matrix = [ 1, 0, mth.tan(transform.data[ 0 ]), 1, 0, 0 ]
