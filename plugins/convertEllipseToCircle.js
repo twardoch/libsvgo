@@ -8,6 +8,8 @@ const description = 'converts non-eccentric <ellipse>s to <circle>s'
 
 const params = {}
 
+const none = { value: 0 }
+
 /**
  * Converts non-eccentric <ellipse>s to <circle>s.
  *
@@ -20,8 +22,8 @@ const params = {}
  */
 const fn = function (item) {
   if (item.isElem('ellipse')) {
-    const rx = item.attr('rx').value || 0
-    const ry = item.attr('ry').value || 0
+    const rx = (item.attr('rx') || none).value || 0
+    const ry = (item.attr('ry') || none).value || 0
 
     if (rx === ry ||
       rx === 'auto' || ry === 'auto' // SVG2
