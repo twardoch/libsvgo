@@ -1,57 +1,60 @@
 {
-  "private": false,
-  "name": "libsvgo",
-  "version": "1.3.4",
-  "description": "The core code of SVGO, optimized to be portable",
-  "author": "dr-js",
-  "license": "MIT",
-  "repository": "github:dr-js/libsvgo",
-  "main": "./lib/svgo",
-  "scripts": {
-    "// script ======================": "",
-    "script-pack": "node -r @babel/register ./script quiet pack",
-    "script-pack-test": "node -r @babel/register ./script verbose pack test",
-    "script-publish": "node -r @babel/register ./script pack publish",
-    "script-publish-dev": "node -r @babel/register ./script pack publish-dev",
-    "script-clear-output-test": "dr-js --rm ./output-gitignore/test/ ./output-gitignore/module/test/",
-    "// build =======================": "",
-    "build-library-lib": "babel ./lib --out-dir ./output-gitignore/lib",
-    "build-library-plugins": "babel ./plugins --out-dir ./output-gitignore/plugins",
-    "build-library-test": "babel ./test --out-dir ./output-gitignore/test --copy-files",
-    "build-module-lib": "dr-dev --EE BABEL_ENV=dev -E -- babel ./lib --out-dir ./output-gitignore/module/lib",
-    "build-module-plugins": "dr-dev --EE BABEL_ENV=dev -E -- babel ./plugins --out-dir ./output-gitignore/module/plugins",
-    "build-module-test": "dr-dev --EE BABEL_ENV=dev -E -- babel ./test --out-dir ./output-gitignore/module/test --copy-files",
-    "build-webpack": "node -r @babel/register ./script/webpack production profile",
-    "// test ========================": "",
-    "test-dev": "dr-dev --EE BABEL_ENV=dev -E -- dr-dev --TR @babel/register should -T test/plugins/",
-    "test-source": "dr-dev --TR @babel/register should -T ./test/",
-    "test-output-library": "dr-dev --TR should -T ./output-gitignore/test/",
-    "test-output-module": "dr-dev --TR @babel/register should -T ./output-gitignore/module/test/",
-    "// example =====================": "",
-    "example-node": "node -r @babel/register ./examples/test.js",
-    "example-webpack-node": "node ./examples/test-output-webpack.js",
-    "example-webpack-browser": "dr-js -o http://localhost:8080/examples/test-output-webpack.html && dr-js --ssss -H :8080 -R ./",
-    "// =============================": "",
-    "analyze-stat": "npx webpack-bundle-analyzer .temp-gitignore/profile-stat.json output-gitignore/webpack",
-    "test": "npm run script-pack-test",
-    "lint": "eslint ./lib/ ./plugins/ ./script/ ./test/ ./examples/"
-  },
-  "engines": {
-    "node": ">=12.19",
-    "npm": ">=6.14"
-  },
-  "dependencies": {
-    "css-select": "^3.1.2",
-    "css-select-base-adapter": "^0.1.1",
-    "css-tree": "^1.1.2",
-    "csso": "^4.2.0",
-    "sax": "^1.2.4",
-    "stable": "^0.1.8"
-  },
-  "devDependencies": {
-    "@dr-js/core": "0.4.4-dev.0",
-    "@dr-js/dev": "0.4.3-dev.9",
-    "@dr-js/dev-web": "0.4.3-dev.9",
-    "should": "^13.2.3"
-  }
+    "private": false,
+    "name": "libsvgo",
+    "version": "1.3.2",
+    "description": "The core code of SVGO, optimized to be portable",
+    "author": "dr-js",
+    "license": "MIT",
+    "repository": "github:dr-js/libsvgo",
+    "main": "./lib/svgo",
+    "scripts": {
+        "// script ======================": "",
+        "script-pack": "node -r @babel/register ./script quiet pack",
+        "script-pack-test": "node -r @babel/register ./script verbose pack test",
+        "script-publish": "node -r @babel/register ./script pack publish",
+        "script-publish-dev": "node -r @babel/register ./script pack publish-dev",
+        "script-clear-output-test": "dr-js --rm ./output-gitignore/test/ ./output-gitignore/module/test/",
+        "// build =======================": "",
+        "build-library-lib": "babel ./lib --out-dir ./output-gitignore/lib",
+        "build-library-plugins": "babel ./plugins --out-dir ./output-gitignore/plugins",
+        "build-library-test": "babel ./test --out-dir ./output-gitignore/test --copy-files",
+        "build-module-lib": "cross-env BABEL_ENV=module babel ./lib --out-dir ./output-gitignore/module/lib",
+        "build-module-plugins": "cross-env BABEL_ENV=module babel ./plugins --out-dir ./output-gitignore/module/plugins",
+        "build-module-test": "cross-env BABEL_ENV=module babel ./test --out-dir ./output-gitignore/module/test --copy-files",
+        "build-esbuild": "npx esbuild --bundle lib/svgo.js --outdir=output-gitignore/esbuild --sourcemap",
+        "build-webpack": "node -r @babel/register ./script/webpack production profile",
+        "// test ========================": "",
+        "test-dev": "cross-env BABEL_ENV=dev dr-dev --TR @babel/register should -T test/plugins/",
+        "test-source": "dr-dev --TR @babel/register should -T ./test/",
+        "test-output-library": "dr-dev --TR should -T ./output-gitignore/test/",
+        "test-output-module": "dr-dev --TR @babel/register should -T ./output-gitignore/module/test/",
+        "// =============================": "",
+        "analyze-stat": "npx webpack-bundle-analyzer .temp-gitignore/profile-stat.json output-gitignore/webpack",
+        "example": "node -r @babel/register ./examples/test.js",
+        "test": "npm run script-pack-test",
+        "lint": "eslint ./lib/ ./plugins/ ./test/"
+    },
+    "config": {
+        "// NOTE: match version between `csso` and `css-tree` to prevent duplication": ""
+    },
+    "engines": {
+        "node": ">=12.13",
+        "npm": ">=6.12"
+    },
+    "dependencies": {
+        "css-select": "^2.1.0",
+        "css-select-base-adapter": "^0.1.1",
+        "css-tree": "1.0.0-alpha.39",
+        "csso": "4.0.3",
+        "sax": "~1.2.4",
+        "stable": "^0.1.8",
+        "stream": "0.0.2"
+    },
+    "devDependencies": {
+        "@dr-js/core": "0.3.0-dev.1",
+        "@dr-js/dev": "0.3.0-dev.1",
+        "@dr-js/dev-web": "0.3.0-dev.1",
+        "esbuild": "^0.3.1",
+        "should": "~13.2.3"
+    }
 }
