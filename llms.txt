@@ -1,0 +1,1203 @@
+Project Structure:
+📁 libsvgo
+├── 📁 .github
+│   └── 📁 workflows
+│       └── 📄 ci-test.yml
+├── 📁 examples
+│   ├── 📄 test-output-webpack.html
+│   ├── 📄 test-output-webpack.js
+│   └── 📄 test.js
+├── 📁 lib
+│   ├── 📁 svgo
+│   │   ├── 📄 config-lite.js
+│   │   ├── 📄 css-class-list.js
+│   │   ├── 📄 css-select-adapter.js
+│   │   ├── 📄 css-style-declaration.js
+│   │   ├── 📄 js2svg.js
+│   │   ├── 📄 jsAPI.js
+│   │   ├── 📄 plugins.js
+│   │   ├── 📄 svg2js.js
+│   │   └── 📄 tools.js
+│   ├── 📄 css-tools.js
+│   ├── 📄 svgo-lite.js
+│   ├── 📄 svgo.js
+│   └── 📄 svgo.webpack-entry.js
+├── 📁 output-gitignore
+│   ├── 📁 esbuild
+│   ├── 📁 lib
+│   │   └── 📁 svgo
+│   ├── 📁 module
+│   │   ├── 📁 lib
+│   │   │   └── 📁 svgo
+│   │   └── 📁 plugins
+│   ├── 📁 plugins
+│   └── 📁 webpack
+├── 📁 plugins
+│   ├── 📄 __all.js
+│   ├── 📄 __default.js
+│   ├── 📄 _collections.js
+│   ├── 📄 _path.js
+│   ├── 📄 _transforms.js
+│   ├── 📄 addAttributesToSVGElement.js
+│   ├── 📄 addClassesToSVGElement.js
+│   ├── 📄 cleanupAttrs.js
+│   ├── 📄 cleanupEnableBackground.js
+│   ├── 📄 cleanupIDs.js
+│   ├── 📄 cleanupListOfValues.js
+│   ├── 📄 cleanupNumericValues.js
+│   ├── 📄 collapseGroups.js
+│   ├── 📄 convertColors.js
+│   ├── 📄 convertEllipseToCircle.js
+│   ├── 📄 convertPathData.js
+│   ├── 📄 convertShapeToPath.js
+│   ├── 📄 convertStyleToAttrs.js
+│   ├── 📄 convertTransform.js
+│   ├── 📄 inlineStyles.js
+│   ├── 📄 mergePaths.js
+│   ├── 📄 minifyStyles.js
+│   ├── 📄 moveElemsAttrsToGroup.js
+│   ├── 📄 moveGroupAttrsToElems.js
+│   ├── 📄 prefixIds.js
+│   ├── 📄 removeAttributesBySelector.js
+│   ├── 📄 removeAttrs.js
+│   ├── 📄 removeComments.js
+│   ├── 📄 removeDesc.js
+│   ├── 📄 removeDimensions.js
+│   ├── 📄 removeDoctype.js
+│   ├── 📄 removeEditorsNSData.js
+│   ├── 📄 removeElementsByAttr.js
+│   ├── 📄 removeEmptyAttrs.js
+│   ├── 📄 removeEmptyContainers.js
+│   ├── 📄 removeEmptyText.js
+│   ├── 📄 removeHiddenElems.js
+│   ├── 📄 removeMetadata.js
+│   ├── 📄 removeNonInheritableGroupAttrs.js
+│   ├── 📄 removeOffCanvasPaths.js
+│   ├── 📄 removeRasterImages.js
+│   ├── 📄 removeScriptElement.js
+│   ├── 📄 removeStyleElement.js
+│   ├── 📄 removeTitle.js
+│   ├── 📄 removeUnknownsAndDefaults.js
+│   ├── 📄 removeUnusedNS.js
+│   ├── 📄 removeUselessDefs.js
+│   ├── 📄 removeUselessStrokeAndFill.js
+│   ├── 📄 removeViewBox.js
+│   ├── 📄 removeXMLNS.js
+│   ├── 📄 removeXMLProcInst.js
+│   ├── 📄 reusePaths.js
+│   ├── 📄 sortAttrs.js
+│   └── 📄 sortDefsChildren.js
+├── 📁 script
+│   ├── 📄 index.js
+│   └── 📄 webpack.js
+├── 📁 test
+│   ├── 📁 config
+│   │   └── 📄 _index.js
+│   ├── 📁 jsapi
+│   │   └── 📄 _index.js
+│   ├── 📁 plugins
+│   │   └── 📄 _index.js
+│   ├── 📁 svg2js
+│   │   └── 📄 _index.js
+│   └── 📁 svgo
+│       └── 📄 _index.js
+├── 📄 .gitignore
+├── 📄 babel.config.js
+├── 📄 LICENSE
+├── 📄 package-lock.json
+├── 📄 package.json
+└── 📄 README.md
+
+
+<documents>
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/.eslintrc.js
+# Language: javascript
+
+
+
+<document index="1">
+<source>.github/workflows/ci-test.yml</source>
+<document_content>
+name: ci-test
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false # allow all test to run to the end
+      matrix:
+        os: [ ubuntu-latest ] # [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version: [ 12.x, 14.x, 15.x ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Setup Git repo
+        uses: actions/checkout@v2 # https://github.com/actions/checkout
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1 # https://github.com/actions/setup-node
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Log CI info
+        run: |
+          echo "system: $(uname -a)"
+          echo "node: $(node -v)"
+          echo "npm: $(npm -v)"
+
+      - run: npm ci
+
+      - run: npm test
+
+</document_content>
+</document>
+
+<document index="2">
+<source>.gitignore</source>
+<document_content>
+# Platform quirk
+*~
+Thumbs.db
+.DS_Store
+
+# Log
+log
+logs
+*.log
+
+# Editor configuration
+.idea
+.vscode
+
+# Ignore local or CI ".npmrc"
+.npmrc
+
+# Dependency directory
+node_modules
+
+# Output of `npm pack`
+/*.tgz
+
+# Ignore folder of file with `-gitignore`
+**/*-gitignore/**
+**/*-gitignore*
+
+</document_content>
+</document>
+
+<document index="3">
+<source>LICENSE</source>
+<document_content>
+The MIT License
+
+Copyright © 2012–2016 Kir Belevich
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Лицензия MIT
+
+Copyright © 2012–2016 Кир Белевич
+
+Данная лицензия разрешает лицам, получившим копию данного
+программного обеспечения и сопутствующей документации
+(в дальнейшем именуемыми «Программное Обеспечение»), безвозмездно
+использовать Программное Обеспечение без ограничений, включая
+неограниченное право на использование, копирование, изменение,
+добавление, публикацию, распространение, сублицензирование
+и/или продажу копий Программного Обеспечения, также как и лицам,
+которым предоставляется данное Программное Обеспечение,
+при соблюдении следующих условий:
+
+Указанное выше уведомление об авторском праве и данные условия
+должны быть включены во все копии или значимые части данного
+Программного Обеспечения.
+
+ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ»,
+БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ,
+ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ,
+СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ
+ПРАВ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ
+ОТВЕТСТВЕННОСТИ ПО ИСКАМ О ВОЗМЕЩЕНИИ УЩЕРБА, УБЫТКОВ ИЛИ ДРУГИХ
+ТРЕБОВАНИЙ ПО ДЕЙСТВУЮЩИМ КОНТРАКТАМ, ДЕЛИКТАМ ИЛИ ИНОМУ,
+ВОЗНИКШИМ ИЗ, ИМЕЮЩИМ ПРИЧИНОЙ ИЛИ СВЯЗАННЫМ С ПРОГРАММНЫМ
+ОБЕСПЕЧЕНИЕМ ИЛИ ИСПОЛЬЗОВАНИЕМ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ
+ИЛИ ИНЫМИ ДЕЙСТВИЯМИ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.
+
+</document_content>
+</document>
+
+<document index="4">
+<source>README.md</source>
+<document_content>
+# libsvgo
+
+[![i:npm]][l:npm]
+[![i:ci]][l:ci]
+[![i:size]][l:size]
+[![i:npm-dev]][l:npm]
+
+The core code of [SVGO][l:svgo], optimized to be portable
+
+[i:npm]: https://img.shields.io/npm/v/libsvgo
+[i:npm-dev]: https://img.shields.io/npm/v/libsvgo/dev
+[l:npm]: https://npm.im/libsvgo
+[i:ci]: https://img.shields.io/github/workflow/status/dr-js/libsvgo/ci-test
+[l:ci]: https://github.com/dr-js/libsvgo/actions?query=workflow:ci-test
+[i:size]: https://packagephobia.now.sh/badge?p=libsvgo
+[l:size]: https://packagephobia.now.sh/result?p=libsvgo
+
+[l:svgo]: https://github.com/svg/svgo
+
+[//]: # (NON_PACKAGE_CONTENT)
+
+--- --- ---
+
+- 📁 [lib/](lib/) & [plugins/](plugins/)
+  - main source code, in output package will be:
+    - `libsvgo/lib/` & `libsvgo/plugins/`:
+        for direct use, use `require() / exports.*=`
+    - `libsvgo/module/lib/` & `libsvgo/module/plugins/`:
+        for use with `node` + `@babel/register`, keep `import / export` and readability
+    - `libsvgo/webpack/SVGO.js`:
+        all-in-one packaged version,
+        can be used in browser like `<script src="https://unpkg.com/libsvgo/webpack/SVGO.js"></script>`,
+        and provide `window.SVGO`
+        (experimental)
+- 📁 [test/](test/)
+  - test code & resource file
+- 📁 [examples/](examples/)
+  - code example
+
+This repo is a heavily changed fork of [SVGO][l:svgo], mainly:
+- ES6+ code update & re-format
+- drop cli and option parsing code to reduce size
+- drop node-specific module to allow both Browser and Node use
+
+And is expected to be used by `nodejs@>=12` or recent-enough Browser
+
+--- --- ---
+
+sample usage: (ES6 module)
+```js
+// get most used from main entry
+import { SVGO, SVGO_LITE, CONFIG_LITE, PLUGINS_DEFAULT_LIST } from 'libsvgo/module/lib/svgo'
+
+// or get each separately
+import { SVGO_LITE } from 'libsvgo/module/lib/svgo-lite'
+import { SVGO_LITECONFIG_LITE } from 'libsvgo/module/lib/svgo/config-lite'
+
+// get each plugin separately
+import * as addAttributesToSVGElement from 'libsvgo/module/plugins/addAttributesToSVGElement'
+```
+
+sample usage: (Node.js module through Babel)
+```js
+// get most used from main entry
+const { SVGO, SVGO_LITE, CONFIG_LITE, PLUGINS_DEFAULT_LIST } = require('libsvgo/lib/svgo')
+
+// or get each separately
+const { SVGO_LITE } = require('libsvgo/lib/svgo-lite')
+const { SVGO_LITECONFIG_LITE } = require('libsvgo/lib/svgo/config-lite')
+
+// get each plugin separately
+const addAttributesToSVGElement = require('libsvgo/plugins/addAttributesToSVGElement')
+```
+
+sample usage: (ES6 Webpack bundle)
+```js
+// `require()` in nodejs
+const SVGO = require('libsvgo/webpack/SVGO')
+// or load from `<script src="https://unpkg.com/libsvgo/webpack/SVGO.js"></script>` in browser
+
+// get common lib (not all is exposed)
+const { SVGO_LITE, CONFIG_LITE, PLUGINS_DEFAULT_LIST, PLUGINS_MAP } = SVGO
+
+// get plugin
+const { addAttributesToSVGElement } = PLUGINS_MAP
+```
+
+also check [examples/](examples/) for basic usage
+
+</document_content>
+</document>
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/babel.config.js
+# Language: javascript
+
+
+
+<document index="5">
+<source>examples/test-output-webpack.html</source>
+<document_content>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVGO browser test</title>
+  <!-- need to `npm run script-pack` first to generate output -->
+  <!-- and start a local HTTP server -->
+  <script src="../output-gitignore/webpack/SVGO.js"></script>
+</head>
+<body>
+
+<pre id="LOG"></pre>
+
+<script>
+  const { SVGO, fetch } = window
+
+  const logText = (...textList) => {
+    console.log(...textList)
+    document.querySelector('#LOG').innerText += `${textList.join(' ')}\n`
+  }
+
+  const main = async () => {
+    const filepath = './test.svg'
+    const data = await (await fetch(filepath)).text()
+    logText(`[data]`, JSON.stringify(data, null, 2))
+
+    const svgo = new SVGO()
+    const result = await svgo.optimize(data, { path: filepath })
+    logText(`[result]`, JSON.stringify(result, null, 2))
+    // {
+    //   // optimized SVG data string
+    //   data: '<svg width="10" height="20">test</svg>',
+    //   // additional info such as width/height
+    //   info: { width: '10', height: '20' },
+    //   path: '.../test.svg'
+    // }
+  }
+
+  main().catch(console.error)
+</script>
+</body>
+</html>
+
+</document_content>
+</document>
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/examples/test-output-webpack.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/examples/test.js
+# Language: javascript
+
+import { readFileSync, writeFileSync } from 'fs'
+import { resolve } from 'path'
+import { SVGO } from '../lib/svgo'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/css-tools.js
+# Language: javascript
+
+import stable from 'stable'
+import specificity from 'csso/lib/restructure/prepare/specificity'
+import csstree from 'css-tree'
+
+function flattenToSelectors((cssAst))
+
+function filterByMqs((selectors, useMqs))
+
+function filterByPseudos((selectors, usePseudos))
+
+function cleanPseudos((selectors))
+
+function compareSpecificity((aSpecificity, bSpecificity))
+
+function compareSimpleSelectorNode((aSimpleSelectorNode, bSimpleSelectorNode))
+
+function _bySelectorSpecificity((selectorA, selectorB))
+
+function sortSelectors((selectors))
+
+function csstreeToStyleDeclaration((declaration))
+
+function getCssStr((elem))
+
+function setCssStr((elem, css))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/config-lite.js
+# Language: javascript
+
+function optimizePluginsArray((plugins))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/css-class-list.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/css-select-adapter.js
+# Language: javascript
+
+import baseCssAdapter from 'css-select-base-adapter'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/css-style-declaration.js
+# Language: javascript
+
+import csstree from 'css-tree'
+import { csstreeToStyleDeclaration } from '../css-tools'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/js2svg.js
+# Language: javascript
+
+import { elemsGroups } from '../../plugins/_collections'
+
+function JS2SVG((config))
+
+function encodeEntity((char))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/jsAPI.js
+# Language: javascript
+
+import {
+  selectAll as CssSelectSelectAll,
+  selectOne as CssSelectSelectOne,
+  is as CssSelectIs
+} from 'css-select'
+import { svgoCssSelectAdapter } from './css-select-adapter'
+
+function nameTest((attr))
+
+function stringValueTest((attr))
+
+function regexpValueTest((attr))
+
+function funcValueTest((attr))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/plugins.js
+# Language: javascript
+
+function perItem((data, info, plugins, reverse))
+
+function monkeys((items))
+
+function full((data, info, plugins))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/svg2js.js
+# Language: javascript
+
+import SAX from 'sax'
+import { JSAPI } from './jsAPI'
+import { CSSClassList } from './css-class-list'
+import { CSSStyleDeclaration } from './css-style-declaration'
+
+function pushToContent((content))
+
+function trim((elem))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo/tools.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo-lite.js
+# Language: javascript
+
+import { CONFIG_LITE } from './svgo/config-lite'
+import { SVG2JS } from './svgo/svg2js'
+import { PLUGINS } from './svgo/plugins'
+import { JSAPI } from './svgo/jsAPI'
+import { JS2SVG } from './svgo/js2svg'
+import { encodeSVGDatauri } from './svgo/tools'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo.js
+# Language: javascript
+
+import { SVGO_LITE } from './svgo-lite'
+import { CONFIG_LITE } from './svgo/config-lite'
+import { PLUGINS_DEFAULT_LIST } from '../plugins/__default'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/lib/svgo.webpack-entry.js
+# Language: javascript
+
+import { SVGO } from './svgo'
+import { SVGO_LITE } from './svgo-lite'
+import { CONFIG_LITE } from './svgo/config-lite'
+import { PLUGINS_DEFAULT_LIST } from '../plugins/__default'
+import * as PLUGINS_MAP from '../plugins/__all'
+
+
+<document index="6">
+<source>package-lock.json</source>
+<document_content>
+{
+  "name": "libsvgo",
+  "version": "1.3.4",
+  "lockfileVersion": 1,
+  "requires": true,
+... (file content truncated to first 5 lines)
+</document_content>
+</document>
+
+<document index="7">
+<source>package.json</source>
+<document_content>
+{
+    "private": false,
+    "name": "libsvgo",
+    "version": "1.3.2",
+    "description": "The core code of SVGO, optimized to be portable",
+... (file content truncated to first 5 lines)
+</document_content>
+</document>
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/__all.js
+# Language: javascript
+
+import * as addAttributesToSVGElement from './addAttributesToSVGElement'
+import * as addClassesToSVGElement from './addClassesToSVGElement'
+import * as cleanupAttrs from './cleanupAttrs'
+import * as cleanupEnableBackground from './cleanupEnableBackground'
+import * as cleanupIDs from './cleanupIDs'
+import * as cleanupListOfValues from './cleanupListOfValues'
+import * as cleanupNumericValues from './cleanupNumericValues'
+import * as collapseGroups from './collapseGroups'
+import * as convertColors from './convertColors'
+import * as convertEllipseToCircle from './convertEllipseToCircle'
+import * as convertPathData from './convertPathData'
+import * as convertShapeToPath from './convertShapeToPath'
+import * as convertStyleToAttrs from './convertStyleToAttrs'
+import * as convertTransform from './convertTransform'
+import * as inlineStyles from './inlineStyles'
+import * as mergePaths from './mergePaths'
+import * as minifyStyles from './minifyStyles'
+import * as moveElemsAttrsToGroup from './moveElemsAttrsToGroup'
+import * as moveGroupAttrsToElems from './moveGroupAttrsToElems'
+import * as prefixIds from './prefixIds'
+import * as removeAttributesBySelector from './removeAttributesBySelector'
+import * as removeAttrs from './removeAttrs'
+import * as removeComments from './removeComments'
+import * as removeDesc from './removeDesc'
+import * as removeDimensions from './removeDimensions'
+import * as removeDoctype from './removeDoctype'
+import * as removeEditorsNSData from './removeEditorsNSData'
+import * as removeElementsByAttr from './removeElementsByAttr'
+import * as removeEmptyAttrs from './removeEmptyAttrs'
+import * as removeEmptyContainers from './removeEmptyContainers'
+import * as removeEmptyText from './removeEmptyText'
+import * as removeHiddenElems from './removeHiddenElems'
+import * as removeMetadata from './removeMetadata'
+import * as removeNonInheritableGroupAttrs from './removeNonInheritableGroupAttrs'
+import * as removeOffCanvasPaths from './removeOffCanvasPaths'
+import * as removeRasterImages from './removeRasterImages'
+import * as removeScriptElement from './removeScriptElement'
+import * as removeStyleElement from './removeStyleElement'
+import * as removeTitle from './removeTitle'
+import * as removeUnknownsAndDefaults from './removeUnknownsAndDefaults'
+import * as removeUnusedNS from './removeUnusedNS'
+import * as removeUselessDefs from './removeUselessDefs'
+import * as removeUselessStrokeAndFill from './removeUselessStrokeAndFill'
+import * as removeViewBox from './removeViewBox'
+import * as removeXMLNS from './removeXMLNS'
+import * as removeXMLProcInst from './removeXMLProcInst'
+import * as reusePaths from './reusePaths'
+import * as sortAttrs from './sortAttrs'
+import * as sortDefsChildren from './sortDefsChildren'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/__default.js
+# Language: javascript
+
+import * as cleanupAttrs from './cleanupAttrs'
+import * as cleanupEnableBackground from './cleanupEnableBackground'
+import * as cleanupIDs from './cleanupIDs'
+import * as cleanupNumericValues from './cleanupNumericValues'
+import * as collapseGroups from './collapseGroups'
+import * as convertColors from './convertColors'
+import * as convertEllipseToCircle from './convertEllipseToCircle'
+import * as convertPathData from './convertPathData'
+import * as convertShapeToPath from './convertShapeToPath'
+import * as convertStyleToAttrs from './convertStyleToAttrs'
+import * as convertTransform from './convertTransform'
+import * as inlineStyles from './inlineStyles'
+import * as mergePaths from './mergePaths'
+import * as minifyStyles from './minifyStyles'
+import * as moveElemsAttrsToGroup from './moveElemsAttrsToGroup'
+import * as moveGroupAttrsToElems from './moveGroupAttrsToElems'
+import * as removeComments from './removeComments'
+import * as removeDesc from './removeDesc'
+import * as removeDoctype from './removeDoctype'
+import * as removeEditorsNSData from './removeEditorsNSData'
+import * as removeEmptyAttrs from './removeEmptyAttrs'
+import * as removeEmptyContainers from './removeEmptyContainers'
+import * as removeEmptyText from './removeEmptyText'
+import * as removeHiddenElems from './removeHiddenElems'
+import * as removeMetadata from './removeMetadata'
+import * as removeNonInheritableGroupAttrs from './removeNonInheritableGroupAttrs'
+import * as removeTitle from './removeTitle'
+import * as removeUnknownsAndDefaults from './removeUnknownsAndDefaults'
+import * as removeUnusedNS from './removeUnusedNS'
+import * as removeUselessDefs from './removeUselessDefs'
+import * as removeUselessStrokeAndFill from './removeUselessStrokeAndFill'
+import * as removeViewBox from './removeViewBox'
+import * as removeXMLProcInst from './removeXMLProcInst'
+import * as sortDefsChildren from './sortDefsChildren'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/_collections.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/_path.js
+# Language: javascript
+
+import {
+  cleanupOutData,
+  removeLeadingZero
+} from '../lib/svgo/tools'
+import {
+  transform2js,
+  transformsMultiply,
+  transformArc
+} from './_transforms'
+import {
+  attrsGroupsDefaults,
+  referencesProps
+} from './_collections'
+
+function transformPoint((matrix, x, y))
+
+function computeCubicBaseValue((t, a, b, c, d))
+
+function computeCubicFirstDerivativeRoots((a, b, c, d))
+
+function computeQuadraticBaseValue((t, a, b, c))
+
+function computeQuadraticFirstDerivativeRoot((a, b, c))
+
+function collapseRepeated((data))
+
+function set((dest, source))
+
+function getSupport((a, b, direction))
+
+function supportPoint((polygon, direction))
+
+function processSimplex((simplex, direction))
+
+function minus((v))
+
+function sub((v1, v2))
+
+function dot((v1, v2))
+
+function orth((v, from))
+
+function gatherPoints((points, item, index, path))
+
+function toAbsolute((n, i))
+
+function addPoint((path, point))
+
+function convexHull((points))
+
+function cross((o, a, b))
+
+function a2c((x1, y1, rx, ry, angle, largeArcFlag, sweepFlag, x2, y2, recursive))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/_transforms.js
+# Language: javascript
+
+function transformToMatrix((transform))
+
+function multiplyTransformMatrices((a, b))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/addAttributesToSVGElement.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/addClassesToSVGElement.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/cleanupAttrs.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/cleanupEnableBackground.js
+# Language: javascript
+
+function checkEnableBackground((item))
+
+function checkForFilter((item))
+
+function monkeys((items, fn))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/cleanupIDs.js
+# Language: javascript
+
+import { referencesProps as __referencesProps } from './_collections'
+
+function monkeys((items))
+
+function idMatchesPrefix((prefixArray, currentID))
+
+function generateID((currentID))
+
+function getIDstring((arr, params))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/cleanupListOfValues.js
+# Language: javascript
+
+import { removeLeadingZero } from '../lib/svgo/tools'
+
+function roundValues(($prop))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/cleanupNumericValues.js
+# Language: javascript
+
+import { removeLeadingZero } from '../lib/svgo/tools'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/collapseGroups.js
+# Language: javascript
+
+import { inheritableAttrs as attrsInheritable, elemsGroups } from './_collections'
+
+function hasAnimatedAttr((item))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertColors.js
+# Language: javascript
+
+import { colorsProps, colorsNames, colorsShortNames } from './_collections'
+
+function rgb2hex((rgb))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertEllipseToCircle.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertPathData.js
+# Language: javascript
+
+import { cleanupOutData } from '../lib/svgo/tools'
+import { pathElems } from './_collections'
+import { path2js, js2path, applyTransforms } from './_path'
+
+function convertToRelative((path))
+
+function filters((path, params))
+
+function convertToMixed((path, params))
+
+function isConvex((data))
+
+function getIntersection((coords))
+
+function strongRound((data))
+
+function round((data))
+
+function isCurveStraightLine((data))
+
+function makeLonghand((item, data))
+
+function getDistance((point1, point2))
+
+function getCubicBezierPoint((curve, t))
+
+function findCircle((curve))
+
+function isArc((curve, circle))
+
+function isArcPrev((curve, circle))
+
+function findArcAngle((curve, relCircle))
+
+function data2Path((params, pathData))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertShapeToPath.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertStyleToAttrs.js
+# Language: javascript
+
+import { attrsGroups } from './_collections'
+
+function g(())
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/convertTransform.js
+# Language: javascript
+
+import { cleanupOutData } from '../lib/svgo/tools'
+import { transform2js, transformsMultiply, matrixToTransform } from './_transforms'
+
+function convertTransform((item, attrName, params))
+
+function definePrecision((data, params))
+
+function getMatrixData((a, b))
+
+function floatDigits((n))
+
+function convertToShorts((transforms, params))
+
+function removeUseless((transforms))
+
+function js2transform((transformJS, params))
+
+function roundTransform((transform))
+
+function round((data))
+
+function smartRound((precision, data))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/inlineStyles.js
+# Language: javascript
+
+import csstree from 'css-tree'
+import {
+  flattenToSelectors,
+  filterByMqs,
+  filterByPseudos,
+  cleanPseudos,
+  sortSelectors,
+  csstreeToStyleDeclaration,
+  getCssStr,
+  setCssStr
+} from '../lib/css-tools'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/mergePaths.js
+# Language: javascript
+
+import { path2js, js2path, intersects } from './_path'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/minifyStyles.js
+# Language: javascript
+
+import { minify, minifyBlock } from 'csso'
+
+function cloneObject((obj))
+
+function findStyleElems((ast))
+
+function walk((items, styles))
+
+function shouldFilter((options, name))
+
+function collectUsageData((ast, options))
+
+function walk((items, usageData))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/moveElemsAttrsToGroup.js
+# Language: javascript
+
+import { inheritableAttrs, pathElems } from './_collections'
+
+function intersectInheritableAttrs((a, b))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/moveGroupAttrsToElems.js
+# Language: javascript
+
+import { pathElems as __pathElems, referencesProps } from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/prefixIds.js
+# Language: javascript
+
+import csstree from 'css-tree'
+import { referencesProps } from './_collections.js'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeAttributesBySelector.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeAttrs.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeComments.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeDesc.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeDimensions.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeDoctype.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeEditorsNSData.js
+# Language: javascript
+
+import { editorNamespaces as __editorNamespaces } from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeElementsByAttr.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeEmptyAttrs.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeEmptyContainers.js
+# Language: javascript
+
+import { elemsGroups } from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeEmptyText.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeHiddenElems.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeMetadata.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeNonInheritableGroupAttrs.js
+# Language: javascript
+
+import { inheritableAttrs, attrsGroups, presentationNonInheritableGroupAttrs as applyGroups } from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeOffCanvasPaths.js
+# Language: javascript
+
+import { JSAPI } from '../lib/svgo/jsAPI'
+import { intersects, path2js } from './_path'
+
+function hasTransform((item))
+
+function parseViewBox((svg))
+
+function pathMovesWithinViewBox((path))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeRasterImages.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeScriptElement.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeStyleElement.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeTitle.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeUnknownsAndDefaults.js
+# Language: javascript
+
+import {
+  elems,
+  attrsGroups,
+  elemsGroups,
+  attrsGroupsDefaults,
+  inheritableAttrs as attrsInheritable,
+  presentationNonInheritableGroupAttrs as applyGroups
+} from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeUnusedNS.js
+# Language: javascript
+
+function removeNSfromCollection((ns))
+
+function monkeys((items))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeUselessDefs.js
+# Language: javascript
+
+import { elemsGroups } from './_collections'
+
+function getUsefulItems((item, usefulItems))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeUselessStrokeAndFill.js
+# Language: javascript
+
+import { elemsGroups } from './_collections'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeViewBox.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeXMLNS.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/removeXMLProcInst.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/reusePaths.js
+# Language: javascript
+
+import { JSAPI } from '../lib/svgo/jsAPI'
+
+function convertToUse((item, href))
+
+function traverse((parent, callback))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/sortAttrs.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/plugins/sortDefsChildren.js
+# Language: javascript
+
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/script/index.js
+# Language: javascript
+
+import { resolve } from 'path'
+import { execSync } from 'child_process'
+import { getSourceJsFileListFromPathList } from '@dr-js/dev/module/node/filePreset'
+import { initOutput, packOutput, clearOutput, verifyGitStatusClean, publishOutput } from '@dr-js/dev/module/output'
+import { getTerserOption, minifyFileListWithTerser } from '@dr-js/dev/module/minify'
+import { runMain, argvFlag } from '@dr-js/dev/module/main'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/script/webpack.js
+# Language: javascript
+
+import { resolve } from 'path'
+import { compileWithWebpack, commonFlag } from '@dr-js/dev/module/webpack'
+import { runMain } from '@dr-js/dev/module/main'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/test/config/_index.js
+# Language: javascript
+
+import { CONFIG_LITE } from '../../lib/svgo/config-lite'
+import { PLUGINS_DEFAULT_LIST } from '../../plugins/__default'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/test/jsapi/_index.js
+# Language: javascript
+
+import { SVGO } from '../../lib/svgo'
+import { JSAPI } from '../../lib/svgo/jsAPI'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/test/plugins/_index.js
+# Language: javascript
+
+import { readdirSync, readFile as __readFile } from 'fs'
+import { resolve } from 'path'
+import { SVGO } from '../../lib/svgo'
+
+function normalize((file))
+
+function readFile((file))
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/test/svg2js/_index.js
+# Language: javascript
+
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import SHOULD from 'should'
+import { JSAPI } from '../../lib/svgo/jsAPI'
+import { CSSClassList } from '../../lib/svgo/css-class-list'
+import { CSSStyleDeclaration } from '../../lib/svgo/css-style-declaration'
+import { SVG2JS } from '../../lib/svgo/svg2js'
+
+
+# File: /Users/adam/Developer/vcs/github.twardoch/pub/libsvgo/test/svgo/_index.js
+# Language: javascript
+
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import { SVGO } from '../../lib/svgo'
+
+function normalize((file))
+
+
+</documents>
